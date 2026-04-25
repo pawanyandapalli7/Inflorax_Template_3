@@ -33,7 +33,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
-body.menu-open{overflow:hidden;position:fixed;width:100%}
+body.menu-open{overflow:hidden}
 
 /* ── SCROLL PROGRESS ── */
 #prog{position:fixed;top:0;left:0;height:3px;background:var(--green);width:0%;z-index:9999;pointer-events:none}
@@ -276,9 +276,12 @@ nav{
 .btn-orange:hover,.btn-blue:hover{background:var(--green-d)!important;border-color:var(--green-d)!important;color:var(--white)!important}
 
 /* reveals */
-.rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);animation:rvAutoShow 0s 1.8s forwards}
+@keyframes rvAutoShow{to{opacity:1;transform:none}}
+.rv.in{opacity:1;transform:none;animation:none}
 .rv.in{opacity:1;transform:none}
-.sg>*{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.sg>*{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);animation:rvAutoShow 0s 2.2s forwards}
+.sg.in>*{animation:none}
 .sg.in>*:nth-child(1){opacity:1;transform:none;transition-delay:.04s}
 .sg.in>*:nth-child(2){opacity:1;transform:none;transition-delay:.10s}
 .sg.in>*:nth-child(3){opacity:1;transform:none;transition-delay:.16s}
@@ -386,178 +389,231 @@ nav{
 .pkg-disc{font-family:var(--mono);font-size:10px;color:var(--ink30);margin-top:20px;line-height:1.7;letter-spacing:.03em}
 
 /* ══ SIMULATOR ══ */
-/* ══ PLAN COMPARISON SIMULATOR ══ */
-.sim-input-row{
-  display:flex;align-items:center;gap:28px;
-  padding:24px 36px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.07);
-  margin-top:48px;
-  flex-wrap:wrap;
-  border-radius:4px;
+/* ══ UNIFIED PLAN COMPARISON SIMULATOR ══ */
+.sim-unified{margin-top:48px}
+
+/* Platform toggle */
+.sim-plat-toggle{
+  display:flex;gap:0;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;
+  padding:3px;
+  flex-shrink:0;
 }
-.sim-input-label{
-  font-family:var(--mono);font-size:9px;letter-spacing:.18em;
-  text-transform:uppercase;color:rgba(255,255,255,.3);
+.sim-plat-btn{
+  padding:9px 20px;
+  border:none;border-radius:8px;
+  font-family:var(--sans);font-size:13px;font-weight:700;
+  cursor:pointer;
+  color:rgba(255,255,255,.4);
+  background:transparent;
+  display:flex;align-items:center;gap:7px;
+  transition:all .25s cubic-bezier(.16,1,.3,1);
+  letter-spacing:-.01em;
+  white-space:nowrap;
+}
+.sim-plat-btn:hover{color:rgba(255,255,255,.7)}
+.sim-plat-on{
+  background:var(--green)!important;
+  color:#fff!important;
+  box-shadow:0 3px 12px rgba(45,122,58,.35);
+}
+.sim-plat-icon{font-size:14px;line-height:1}
+.sim-slider-divider{width:1px;background:rgba(255,255,255,.08);flex-shrink:0;align-self:stretch;margin:0 4px}
+
+/* Slider row */
+.sim-slider-row{
+  display:flex;align-items:center;gap:24px;
+  padding:20px 28px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-bottom:none;
+  flex-wrap:wrap;
+}
+.sim-slider-label{
+  font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(255,255,255,.35);
   white-space:nowrap;flex-shrink:0;
 }
 .sim-fol-val{
-  font-size:26px;font-weight:900;color:var(--white);
-  letter-spacing:-.04em;white-space:nowrap;
-  font-family:var(--sans);min-width:180px;text-align:right;
+  display:flex;align-items:baseline;gap:6px;
+  min-width:160px;justify-content:flex-end;
+  flex-shrink:0;
 }
-.sim-fol-val span{color:var(--green)}
+.sim-fol-val span:first-child{
+  font-size:26px;font-weight:900;color:var(--green);
+  letter-spacing:-.04em;font-variant-numeric:tabular-nums;
+}
+.sim-fol-unit{
+  font-family:var(--mono);font-size:10px;
+  color:rgba(255,255,255,.3);letter-spacing:.06em;
+}
 
-/* Plan cards grid */
-.sim-plans{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
-  margin-top:20px;
-}
-.sim-plan{
-  padding:32px 28px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.07);
-  display:flex;flex-direction:column;
-  position:relative;
-  transition:transform .25s cubic-bezier(.16,1,.3,1),
-             box-shadow .25s,
-             background .2s;
-  border-radius:4px;
+/* Main table */
+.sim-table{
+  border:1px solid rgba(255,255,255,.08);
   overflow:hidden;
 }
-.sim-plan::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:rgba(255,255,255,.06);
-  transition:background .3s;
+
+/* Column grid: label + 4 plan cols */
+.sim-table-head,
+.sim-table-row{
+  display:grid;
+  grid-template-columns:180px repeat(4,1fr);
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
-.sim-plan:hover{
-  transform:translateY(-6px);
-  box-shadow:0 20px 50px rgba(0,0,0,.3);
-  background:rgba(255,255,255,.06);
+.sim-table-head{ background:rgba(255,255,255,.02) }
+.sim-table-row:last-child{ border-bottom:none }
+.sim-row-last{ background:rgba(255,255,255,.015) }
+
+/* Row label column */
+.sim-row-label{
+  padding:20px 20px;
+  border-right:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;justify-content:center;gap:4px;
 }
-.sim-plan:hover::before{background:rgba(45,122,58,.5)}
-.sim-plan-pop{
-  background:rgba(12,40,18,.8)!important;
-  border:1px solid rgba(45,122,58,.35)!important;
-  box-shadow:0 0 0 1px rgba(45,122,58,.15), 0 24px 60px rgba(0,0,0,.35)!important;
-}
-.sim-plan-pop::before{
-  background:var(--green)!important;
-  height:3px!important;
-}
-.sim-plan-pop:hover{
-  transform:translateY(-8px)!important;
-  box-shadow:0 0 0 1px rgba(45,122,58,.25), 0 28px 70px rgba(0,0,0,.4)!important;
-}
-.sp-pop-badge{
-  font-family:var(--mono);font-size:8px;letter-spacing:.14em;
-  text-transform:uppercase;color:#fff;
-  background:var(--green);
-  padding:4px 12px;border-radius:100px;
-  display:inline-flex;width:fit-content;
-  margin-bottom:14px;
-  box-shadow:0 4px 12px rgba(45,122,58,.3);
-}
-.sp-tier{
+.srl-main{
   font-family:var(--mono);font-size:9px;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(255,255,255,.28);
-  margin-bottom:6px;
+  text-transform:uppercase;color:rgba(255,255,255,.4);
 }
-.sim-plan-pop .sp-tier{color:rgba(80,200,95,.55)}
-.sp-name{
-  font-size:18px;font-weight:900;color:var(--white);
-  letter-spacing:-.04em;margin-bottom:10px;line-height:1.1;
+.srl-sub{
+  font-family:var(--mono);font-size:8px;letter-spacing:.08em;
+  color:rgba(255,255,255,.2);
 }
-.sp-price{
-  font-size:38px;font-weight:900;color:var(--white);
-  letter-spacing:-.06em;line-height:1;
+
+/* Column header */
+.sim-col-head{
+  padding:24px 20px;
+  border-right:1px solid rgba(255,255,255,.06);
+  position:relative;
 }
-.sim-plan-pop .sp-price{color:var(--green)}
-.sp-duration{
-  font-family:var(--mono);font-size:9px;letter-spacing:.06em;
-  color:rgba(255,255,255,.25);margin-top:5px;
+.sim-col-head:last-child{ border-right:none }
+.sim-col-pop{
+  background:rgba(45,122,58,.1);
+  border-right-color:rgba(45,122,58,.2)!important;
+  border-left:1px solid rgba(45,122,58,.2);
 }
-.sp-divider{
-  height:1px;background:rgba(255,255,255,.06);
-  margin:22px 0;
+.sim-col-pop::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--green);
 }
-.sim-plan-pop .sp-divider{background:rgba(45,122,58,.2)}
-.sp-stat-label{
+.sch-badge{
+  font-family:var(--mono);font-size:7px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--white);
+  background:var(--green);
+  padding:3px 10px;border-radius:100px;
+  display:inline-flex;margin-bottom:10px;
+  box-shadow:0 3px 10px rgba(45,122,58,.3);
+}
+.sch-tier{
   font-family:var(--mono);font-size:8px;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(255,255,255,.25);
-  margin-bottom:8px;
+  text-transform:uppercase;color:rgba(255,255,255,.3);
+  margin-bottom:5px;
 }
-.sp-stat-num{
-  font-size:42px;font-weight:900;color:var(--white);
-  letter-spacing:-.06em;line-height:1;margin-bottom:10px;
-  transition:all .5s cubic-bezier(.16,1,.3,1);
+.sim-col-pop .sch-tier{color:rgba(80,200,95,.5)}
+.sch-name{
+  font-size:15px;font-weight:800;color:var(--white);
+  letter-spacing:-.03em;line-height:1.15;margin-bottom:8px;
+}
+.sch-price{
+  font-size:24px;font-weight:900;color:var(--white);
+  letter-spacing:-.05em;line-height:1;
+}
+.sim-col-pop .sch-price{color:var(--green)}
+.sch-days{
+  font-family:var(--mono);font-size:8px;
+  color:rgba(255,255,255,.25);margin-top:4px;
+}
+
+/* Data cells */
+.sim-cell{
+  padding:18px 20px;
+  border-right:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.sim-cell:last-child{ border-right:none }
+.sim-cell-pop{
+  background:rgba(45,122,58,.07);
+  border-right-color:rgba(45,122,58,.15)!important;
+  border-left:1px solid rgba(45,122,58,.15);
+}
+
+/* Numbers */
+.sc-num{
+  font-size:30px;font-weight:900;color:var(--white);
+  letter-spacing:-.05em;line-height:1;margin-bottom:8px;
   font-variant-numeric:tabular-nums;
+  transition:all .45s cubic-bezier(.16,1,.3,1);
 }
-.sim-plan-pop .sp-stat-num{color:var(--green)}
-.sp-bar-wrap{
-  height:4px;background:rgba(255,255,255,.06);
-  border-radius:2px;overflow:hidden;
-  margin-bottom:6px;
+.sim-cell-pop .sc-num{color:var(--green)}
+
+/* Bar */
+.sc-bar-wrap{height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+.sc-bar{height:100%;background:linear-gradient(90deg,rgba(45,122,58,.5),var(--green));width:0%;border-radius:2px;transition:width .8s cubic-bezier(.16,1,.3,1)}
+.sc-bar-pop{background:linear-gradient(90deg,var(--green),rgba(80,200,95,.9))}
+
+/* Reach */
+.sc-reach{
+  font-family:var(--mono);font-size:13px;font-weight:600;
+  color:rgba(255,255,255,.4);
+  transition:all .45s cubic-bezier(.16,1,.3,1);
 }
-.sp-bar{
-  height:100%;background:linear-gradient(90deg,rgba(45,122,58,.6),var(--green));
-  width:0%;border-radius:2px;
-  transition:width .8s cubic-bezier(.16,1,.3,1);
+.sc-reach-pop{color:rgba(80,200,95,.7)}
+
+/* Best for */
+.sc-best{
+  font-size:12px;color:rgba(255,255,255,.3);
+  line-height:1.55;font-style:italic;
 }
-.sim-plan-pop .sp-bar{background:linear-gradient(90deg,var(--green),rgba(80,200,95,.9))}
-.sp-stat-reach{
-  font-family:var(--mono);font-size:11px;font-weight:600;
-  color:rgba(255,255,255,.35);letter-spacing:.03em;
-  transition:all .4s;margin-top:4px;
-}
-.sim-plan-pop .sp-stat-reach{color:rgba(80,200,95,.65)}
-.sp-best{
-  font-size:11px;color:rgba(255,255,255,.25);
-  line-height:1.6;margin-top:auto;padding-top:14px;
-  font-style:italic;border-top:1px solid rgba(255,255,255,.05);
-  margin-top:20px;
-}
-.sim-plan-pop .sp-best{color:rgba(255,255,255,.4);border-top-color:rgba(45,122,58,.15)}
-.sp-cta{
-  width:100%;padding:12px;
+.sim-cell-pop .sc-best{color:rgba(255,255,255,.5)}
+
+/* CTA row */
+.sim-cta-row .sim-cell{padding:16px 20px}
+.sc-cta{
+  width:100%;padding:10px 12px;
   background:rgba(255,255,255,.06);
   border:1px solid rgba(255,255,255,.1);
-  color:rgba(255,255,255,.6);
-  font-family:var(--sans);font-size:12px;font-weight:700;
+  color:rgba(255,255,255,.65);
+  font-family:var(--sans);font-size:11px;font-weight:700;
   cursor:pointer;letter-spacing:-.01em;
-  margin-top:14px;
   transition:all .2s;border-radius:8px;
+  white-space:nowrap;
 }
-.sp-cta:hover{background:rgba(255,255,255,.12);color:var(--white);border-color:rgba(255,255,255,.2)}
-.sp-cta-pop{
+.sc-cta:hover{background:rgba(255,255,255,.14);color:var(--white)}
+.sc-cta-pop{
   background:var(--green)!important;
   border-color:var(--green)!important;
   color:var(--white)!important;
-  box-shadow:0 6px 20px rgba(45,122,58,.3)!important;
+  box-shadow:0 4px 16px rgba(45,122,58,.3)!important;
 }
-.sp-cta-pop:hover{background:var(--green-d)!important;transform:translateY(-1px)}
+.sc-cta-pop:hover{background:var(--green-d)!important}
+
 .sim-disclaimer{
   font-family:var(--mono);font-size:9px;letter-spacing:.05em;
-  color:rgba(255,255,255,.18);margin-top:20px;line-height:1.6;
+  color:rgba(255,255,255,.2);margin-top:16px;line-height:1.6;
   text-align:center;
 }
-/* Glow orb behind popular card */
-.sim-plan-pop::after{
-  content:'';position:absolute;
-  width:200px;height:200px;border-radius:50%;
-  background:radial-gradient(circle,rgba(45,122,58,.2),transparent 70%);
-  bottom:-60px;right:-40px;pointer-events:none;
-}
-@media(max-width:1024px){
-  .sim-plans{grid-template-columns:repeat(2,1fr)}
+
+/* Responsive */
+@media(max-width:1100px){
+  .sim-table-head,.sim-table-row{grid-template-columns:120px repeat(4,1fr)}
+  .sim-row-label{padding:14px 12px}
+  .sc-num{font-size:24px}
+  .sch-price{font-size:20px}
+  .sch-name{font-size:13px}
 }
 @media(max-width:768px){
-  .sim-plans{grid-template-columns:1fr}
-  .sim-input-row{padding:18px 20px;gap:16px}
-  .sp-stat-num{font-size:36px}
-  .sp-price{font-size:32px}
+  .sim-slider-row{gap:14px;padding:16px}
+  .sim-table-head,.sim-table-row{grid-template-columns:repeat(4,1fr)}
+  .sim-row-label{display:none}
+  .sim-cell,.sim-col-head{padding:14px 10px}
+  .sc-num{font-size:20px}
+  .sch-price{font-size:18px}
+  .sch-name{font-size:12px}
+  .sc-reach,.sc-best,.sch-days{font-size:10px}
+  .sc-cta{font-size:10px;padding:8px 6px}
+  .sim-fol-val span:first-child{font-size:20px}
 }
 #simulator .sec-label{color:rgba(255,255,255,.3)}
 #simulator .sec-label::before{background:rgba(255,255,255,.2)}
@@ -1275,7 +1331,10 @@ footer::before{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   background:var(--ink);
   overflow:hidden;
+  animation:introAutoOut .6s ease 2.6s forwards;
 }
+@keyframes introAutoOut{0%{opacity:1;pointer-events:all}100%{opacity:0;pointer-events:none}}
+#intro.gone{display:none!important}
 #intro.exiting{animation:introOut 1.1s cubic-bezier(.76,0,.24,1) forwards}
 @keyframes introOut{0%{opacity:1;transform:scale(1)}30%{opacity:1;transform:scale(1.02)}100%{opacity:0;transform:scale(1.08);pointer-events:none}}
 #intro-content{position:relative;z-index:2;text-align:center;padding:0 24px}
@@ -2039,6 +2098,20 @@ footer::before{
     -webkit-tap-highlight-color:transparent;
   }
 }
+
+/* ── FORCE VISIBILITY SAFETY NET ── */
+.who-grid .wc,
+.proc-grid .ps,
+.after-timeline .at-step,
+.about-stats .about-stat,
+.beliefs .belief,
+.faq-list .faq-i,
+.stats-row .stat,
+.hv-feed-item,
+.hv-mc {
+  opacity:1!important;
+  transform:none!important;
+}
 </style>
 </head>
 <body>
@@ -2772,97 +2845,41 @@ footer::before{
         <div class="sec-label">Compare plans</div>
         <h2 class="h2">See what each plan<br><em>actually delivers</em></h2>
       </div>
-      <p class="body-t">Drag the slider to your current followers and instantly see what each plan can do for you. All numbers are estimates based on typical campaign performance.</p>
+      <p class="body-t">Choose your platform, drag the slider to your follower count, and watch all plans update instantly.</p>
     </div>
 
-    <!-- Follower input -->
-    <div class="sim-input-row rv" style="transition-delay:.05s">
-      <div class="sim-input-label">Your current followers</div>
-      <div class="sf-slider-wrap" style="flex:1;min-width:200px">
-        <div class="sf-track"></div>
-        <div class="sf-fill" id="ff1"></div>
-        <input type="range" min="100" max="50000" value="1000" step="100" id="fs" oninput="updateSim()"/>
+    <!-- Unified comparison simulator -->
+    <div class="sim-unified rv" style="transition-delay:.08s">
+
+      <!-- Platform toggle + slider row -->
+      <div class="sim-slider-row">
+        <!-- Platform toggle -->
+        <div class="sim-plat-toggle">
+          <button class="sim-plat-btn sim-plat-on" id="sim-btn-ig" onclick="simSetPlat('ig')">
+            <span class="sim-plat-icon">📸</span> Instagram
+          </button>
+          <button class="sim-plat-btn" id="sim-btn-yt" onclick="simSetPlat('yt')">
+            <span class="sim-plat-icon">▶</span> YouTube
+          </button>
+        </div>
+        <!-- Divider -->
+        <div class="sim-slider-divider"></div>
+        <!-- Slider -->
+        <span class="sim-slider-label">Your current followers</span>
+        <div class="sf-slider-wrap" style="flex:1;min-width:120px">
+          <div class="sf-track"></div>
+          <div class="sf-fill" id="ff1"></div>
+          <input type="range" min="100" max="50000" value="1000" step="100" id="fs" oninput="updateSim()"/>
+        </div>
+        <div class="sim-fol-val"><span id="fv">1,000</span><span class="sim-fol-unit">followers</span></div>
       </div>
-      <div class="sim-fol-val"><span id="fv">1,000</span> <span style="font-size:.55em;font-weight:500;color:rgba(255,255,255,.4)">followers</span></div>
+
+      <!-- Comparison table — rendered by JS -->
+      <div class="sim-table" id="sim-table"></div>
+
+      <p class="sim-disclaimer">* Estimates based on typical campaign performance. Actual results vary by content quality, niche, and posting consistency.</p>
     </div>
 
-    <!-- Plan comparison grid -->
-    <div class="sim-plans rv" id="sim-plans" style="transition-delay:.1s">
-
-      <!-- Spark -->
-      <div class="sim-plan">
-        <div class="sp-tier">Spark</div>
-        <div class="sp-name">Getting Started</div>
-        <div class="sp-price">$79</div>
-        <div class="sp-duration">5–7 days</div>
-        <div class="sp-divider"></div>
-        <div class="sp-stat-label">Est. new followers</div>
-        <div class="sp-stat-num" id="sp-f0">—</div>
-        <div class="sp-bar-wrap"><div class="sp-bar" id="sp-b0"></div></div>
-        <div class="sp-stat-label" style="margin-top:14px">Est. reach</div>
-        <div class="sp-stat-reach" id="sp-r0">—</div>
-        <div class="sp-divider"></div>
-        <div class="sp-best">New creators with low views</div>
-        <button class="sp-cta" onclick="openModal('Instagram — Spark','$79')">Try this plan →</button>
-      </div>
-
-      <!-- Ignite — highlighted -->
-      <div class="sim-plan sim-plan-pop">
-        <div class="sp-pop-badge">Most Popular</div>
-        <div class="sp-tier">Ignite</div>
-        <div class="sp-name">Start Getting Seen</div>
-        <div class="sp-price">$199</div>
-        <div class="sp-duration">7–10 days</div>
-        <div class="sp-divider"></div>
-        <div class="sp-stat-label">Est. new followers</div>
-        <div class="sp-stat-num" id="sp-f1">—</div>
-        <div class="sp-bar-wrap"><div class="sp-bar" id="sp-b1"></div></div>
-        <div class="sp-stat-label" style="margin-top:14px">Est. reach</div>
-        <div class="sp-stat-reach" id="sp-r1">—</div>
-        <div class="sp-divider"></div>
-        <div class="sp-best">Creators stuck with low reach</div>
-        <button class="sp-cta sp-cta-pop" onclick="openModal('Instagram — Ignite','$199')">Start this plan →</button>
-      </div>
-
-      <!-- Momentum -->
-      <div class="sim-plan">
-        <div class="sp-tier">Momentum</div>
-        <div class="sp-name">Grow Steadily</div>
-        <div class="sp-price">$399</div>
-        <div class="sp-duration">10–14 days</div>
-        <div class="sp-divider"></div>
-        <div class="sp-stat-label">Est. new followers</div>
-        <div class="sp-stat-num" id="sp-f2">—</div>
-        <div class="sp-bar-wrap"><div class="sp-bar" id="sp-b2"></div></div>
-        <div class="sp-stat-label" style="margin-top:14px">Est. reach</div>
-        <div class="sp-stat-reach" id="sp-r2">—</div>
-        <div class="sp-divider"></div>
-        <div class="sp-best">Creators wanting consistent growth</div>
-        <button class="sp-cta" onclick="openModal('Instagram — Momentum','$399')">Start this plan →</button>
-      </div>
-
-      <!-- Influence -->
-      <div class="sim-plan">
-        <div class="sp-tier">Influence</div>
-        <div class="sp-name">Become a Creator</div>
-        <div class="sp-price">$799</div>
-        <div class="sp-duration">14–21 days</div>
-        <div class="sp-divider"></div>
-        <div class="sp-stat-label">Est. new followers</div>
-        <div class="sp-stat-num" id="sp-f3">—</div>
-        <div class="sp-bar-wrap"><div class="sp-bar" id="sp-b3"></div></div>
-        <div class="sp-stat-label" style="margin-top:14px">Est. reach</div>
-        <div class="sp-stat-reach" id="sp-r3">—</div>
-        <div class="sp-divider"></div>
-        <div class="sp-best">Creators building a strong presence</div>
-        <button class="sp-cta" onclick="openModal('Instagram — Influence','$799')">Start this plan →</button>
-      </div>
-
-    </div>
-
-    <p class="sim-disclaimer">* Estimates based on typical campaign performance. Actual results vary by content quality, niche, and posting consistency. Not a guarantee.</p>
-  </div>
-</section>
   </div>
 </section>
 
@@ -3364,31 +3381,58 @@ footer::before{
 /* ════ PRELOADER ════ */
 (function(){
   var intro = document.getElementById('intro');
-  if(!intro) return;
-  /* add floating particles */
+  if(!intro){
+    document.documentElement.style.overflow='';
+    document.body.style.overflow='';
+    return;
+  }
+  var done = false;
+
+  function unlock(){
+    document.documentElement.style.overflow='';
+    document.body.style.overflow='';
+    document.documentElement.style.position='';
+    document.body.style.position='';
+  }
+
+  function dismiss(){
+    if(done) return;
+    done = true;
+    intro.style.transition='opacity .55s ease';
+    intro.style.opacity='0';
+    intro.style.pointerEvents='none';
+    intro.style.animation='none';
+    setTimeout(function(){
+      intro.classList.add('gone'); /* display:none via CSS */
+      unlock();
+    }, 580);
+  }
+
+  /* Particles */
   for(var i=0;i<18;i++){
     var p=document.createElement('div');p.className='intro-particle';
     var s=Math.random()*4+2;
     p.style.cssText='width:'+s+'px;height:'+s+'px;left:'+(Math.random()*100)+'%;bottom:'+(Math.random()*30)+'px;--dur:'+(Math.random()*8+6)+'s;--delay:'+(Math.random()*5)+'s;--dx:'+((Math.random()-.5)*180)+'px';
     intro.appendChild(p);
   }
-  /* click anywhere to skip */
-  intro.addEventListener('click', enterSite);
-  /* auto-enter after 3s */
-  var t = setTimeout(enterSite, 3000);
-  window._introTimer = t;
-  function enterSite(){
-    clearTimeout(window._introTimer);
-    intro.classList.add('exiting');
-    setTimeout(function(){
-      intro.style.display='none';
-      document.documentElement.style.overflow='';
-      document.body.style.overflow='';
-    },1100);
-  }
-  /* lock scroll during preloader */
+
+  /* Lock scroll */
   document.documentElement.style.overflow='hidden';
   document.body.style.overflow='hidden';
+
+  /* Triggers */
+  intro.addEventListener('click', dismiss);
+  intro.addEventListener('touchend', dismiss, {passive:true});
+
+  /* CSS animation handles visual fade — JS just ensures display:none + unlock */
+  setTimeout(dismiss, 2700);
+
+  /* Absolute nuclear fallback — fires no matter what */
+  setTimeout(function(){
+    done = true;
+    intro.classList.add('gone');
+    unlock();
+  }, 5000);
 })();
 
 /* ════ CLOCK ════ */
@@ -3452,8 +3496,9 @@ function scrollTo0(){window.scrollTo({top:0,behavior:'smooth'});}
 function go(id){closeMenu();setTimeout(function(){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},80);}
 
 /* ════ REVEAL ════ */
-function revealAll(){document.querySelectorAll('.rv,.sg').forEach(function(el){el.classList.add('in');});}
-setTimeout(revealAll,500);
+function revealAll(){document.querySelectorAll('.rv,.sg,.rv>*,.sg>*').forEach(function(el){el.classList.add('in');el.style.opacity='1';el.style.transform='none';});}
+document.addEventListener('DOMContentLoaded', function(){setTimeout(revealAll,100);});
+setTimeout(revealAll,200);
 try{
   var rvObs=new IntersectionObserver(function(entries){
     entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');rvObs.unobserve(en.target);}});
@@ -3514,17 +3559,24 @@ function setPlat(p,btn){
 /* ════ SIMULATOR ════ */
 /* ════ PLAN COMPARISON SIMULATOR ════ */
 (function(){
-  // Plan multipliers: [follower gain %, reach multiplier]
-  var plans = [
-    {id:0, fMult:0.04, rMult:1.8},   // Spark
-    {id:1, fMult:0.10, rMult:3.2},   // Ignite
-    {id:2, fMult:0.18, rMult:5.8},   // Momentum
-    {id:3, fMult:0.30, rMult:9.5},   // Influence
-  ];
+  var currentPlat = 'ig';
+  var platforms = {
+    ig: { plans: [
+      {id:0, tier:'Spark',     name:'Getting Started',    price:'$79',    days:'5–7 days',   best:'New creators with low views',         modal:'Instagram — Spark',    cta:'Try this plan',   fMult:0.04, rMult:1.8,  pop:false},
+      {id:1, tier:'Ignite',    name:'Start Getting Seen', price:'$199',   days:'7–10 days',  best:'Creators stuck with low reach',        modal:'Instagram — Ignite',   cta:'Start this plan', fMult:0.10, rMult:3.2,  pop:true},
+      {id:2, tier:'Momentum',  name:'Grow Steadily',      price:'$399',   days:'10–14 days', best:'Creators wanting consistent growth',   modal:'Instagram — Momentum', cta:'Start this plan', fMult:0.18, rMult:5.8,  pop:false},
+      {id:3, tier:'Influence', name:'Become a Creator',   price:'$799',   days:'14–21 days', best:'Serious about building a presence',    modal:'Instagram — Influence',cta:'Start this plan', fMult:0.30, rMult:9.5,  pop:false},
+    ]},
+    yt: { plans: [
+      {id:0, tier:'Foundation',     name:'Foundation',        price:'$399',   days:'14 days',  best:'New YouTube creators',                 modal:'YouTube — Foundation', cta:'Start this plan', fMult:0.03, rMult:2.2, pop:false},
+      {id:1, tier:'Start Growing',  name:'Start Growing',     price:'$799',   days:'21 days',  best:'Creators stuck on low views',           modal:'YouTube — Accelerate', cta:'Start this plan', fMult:0.08, rMult:4.8, pop:true},
+      {id:2, tier:'Scale Channel',  name:'Scale Your Channel',price:'$1,299', days:'30 days',  best:'Serious about YouTube growth',          modal:'YouTube — Scale',      cta:'Start this plan', fMult:0.15, rMult:8.5, pop:false},
+    ]}
+  };
 
   function fmt(n){
     if(n>=1000000) return (n/1000000).toFixed(1)+'M';
-    if(n>=1000) return (n/1000).toFixed(1)+'K';
+    if(n>=1000)    return (n/1000).toFixed(1)+'K';
     return n.toLocaleString();
   }
 
@@ -3534,41 +3586,107 @@ function setPlat(p,btn){
     var start = null;
     requestAnimationFrame(function step(ts){
       if(!start) start=ts;
-      var p = Math.min((ts-start)/500, 1);
+      var p = Math.min((ts-start)/480, 1);
       var ease = 1-Math.pow(1-p,3);
-      var cur = Math.round(from + (to-from)*ease);
-      el.textContent = fmt(cur);
+      el.textContent = fmt(Math.round(from+(to-from)*ease));
       if(p<1) requestAnimationFrame(step);
     });
   }
 
+  function buildTable(plans){
+    var cols = plans.length;
+    var gc = '160px repeat('+cols+',1fr)';
+    var t = '';
+    /* Header */
+    t += '<div class="sim-table-head" style="grid-template-columns:'+gc+'">';
+    t += '<div class="sim-row-label"></div>';
+    plans.forEach(function(p){
+      var pc = p.pop?' sim-col-pop':'';
+      t += '<div class="sim-col-head'+pc+'">';
+      if(p.pop) t += '<div class="sch-badge">Most Popular</div>';
+      t += '<div class="sch-tier">'+p.tier+'</div><div class="sch-name">'+p.name+'</div><div class="sch-price">'+p.price+'</div><div class="sch-days">'+p.days+'</div></div>';
+    });
+    t += '</div>';
+    /* Followers row */
+    t += '<div class="sim-table-row" style="grid-template-columns:'+gc+'">';
+    t += '<div class="sim-row-label"><span class="srl-main">Est. new followers</span><span class="srl-sub">After campaign</span></div>';
+    plans.forEach(function(p){
+      var pc = p.pop?' sim-cell-pop':'';
+      t += '<div class="sim-cell'+pc+'"><div class="sc-num" id="sp-f'+p.id+'">—</div>';
+      t += '<div class="sc-bar-wrap"><div class="sc-bar'+(p.pop?' sc-bar-pop':'')+'" id="sp-b'+p.id+'"></div></div></div>';
+    });
+    t += '</div>';
+    /* Reach row */
+    t += '<div class="sim-table-row" style="grid-template-columns:'+gc+'">';
+    t += '<div class="sim-row-label"><span class="srl-main">Est. reach</span><span class="srl-sub">Content impressions</span></div>';
+    plans.forEach(function(p){
+      var pc = p.pop?' sim-cell-pop':'';
+      t += '<div class="sim-cell'+pc+'"><div class="sc-reach'+(p.pop?' sc-reach-pop':'')+'" id="sp-r'+p.id+'">—</div></div>';
+    });
+    t += '</div>';
+    /* Best for */
+    t += '<div class="sim-table-row sim-row-last" style="grid-template-columns:'+gc+'">';
+    t += '<div class="sim-row-label"><span class="srl-main">Best for</span></div>';
+    plans.forEach(function(p){
+      var pc = p.pop?' sim-cell-pop':'';
+      t += '<div class="sim-cell'+pc+'"><div class="sc-best">'+p.best+'</div></div>';
+    });
+    t += '</div>';
+    /* CTA row */
+    t += '<div class="sim-table-row sim-cta-row" style="grid-template-columns:'+gc+'">';
+    t += '<div class="sim-row-label"></div>';
+    plans.forEach(function(p){
+      var pc = p.pop?' sim-cell-pop':'';
+      var cc = p.pop?' sc-cta-pop':'';
+      t += '<div class="sim-cell'+pc+'"><button class="sc-cta'+cc+'" onclick="openModal(\''+p.modal+'\',\''+p.price+'\')">'+p.cta+' \u2192</button></div>';
+    });
+    t += '</div>';
+    document.getElementById('sim-table').innerHTML = t;
+  }
+
+  window.simSetPlat = function(plat){
+    currentPlat = plat;
+    document.getElementById('sim-btn-ig').classList.toggle('sim-plat-on', plat==='ig');
+    document.getElementById('sim-btn-yt').classList.toggle('sim-plat-on', plat==='yt');
+    /* Animate table out/in */
+    var tbl = document.getElementById('sim-table');
+    tbl.style.opacity='0';tbl.style.transform='translateY(8px)';
+    setTimeout(function(){
+      buildTable(platforms[plat].plans);
+      window.updateSim();
+      tbl.style.transition='opacity .3s,transform .3s';
+      tbl.style.opacity='1';tbl.style.transform='none';
+    },160);
+  };
+
   window.updateSim = function(){
     var fol = parseInt(document.getElementById('fs').value)||1000;
     document.getElementById('fv').textContent = fol.toLocaleString();
-
-    // Update slider fill
     var fill = document.getElementById('ff1');
     if(fill) fill.style.width = ((fol-100)/(50000-100)*100)+'%';
-
-    // Find max follower gain for bar scaling
-    var maxF = fol * plans[3].fMult;
-
-    plans.forEach(function(plan){
-      var newF = Math.round(fol * plan.fMult);
-      var reach = Math.round(fol * plan.rMult);
-
-      var fEl = document.getElementById('sp-f'+plan.id);
-      var rEl = document.getElementById('sp-r'+plan.id);
-      var bEl = document.getElementById('sp-b'+plan.id);
-
-      if(fEl) animateNum(fEl, newF);
-      if(rEl) rEl.textContent = fmt(reach)+' reach';
-      if(bEl) bEl.style.width = Math.max(8, (newF/maxF)*100)+'%';
+    var plans = platforms[currentPlat].plans;
+    var maxF = fol * plans[plans.length-1].fMult;
+    plans.forEach(function(p){
+      var newF = Math.round(fol*p.fMult);
+      var reach = Math.round(fol*p.rMult);
+      var fEl=document.getElementById('sp-f'+p.id);
+      var rEl=document.getElementById('sp-r'+p.id);
+      var bEl=document.getElementById('sp-b'+p.id);
+      if(fEl) animateNum(fEl,newF);
+      if(rEl) rEl.textContent=fmt(reach);
+      if(bEl) bEl.style.width=Math.max(6,(newF/maxF)*100)+'%';
     });
   };
 
-  // Init on load
-  setTimeout(window.updateSim, 300);
+  buildTable(platforms.ig.plans);
+  setTimeout(window.updateSim,300);
+  /* Also re-init on DOMContentLoaded as safety net */
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){
+      buildTable(platforms.ig.plans);
+      setTimeout(window.updateSim, 100);
+    });
+  }
 })();
 
 /* ════ FAQ ════ */
