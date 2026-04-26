@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scroll-behavior:smooth">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="format-detection" content="telephone=no"/>
 <meta name="theme-color" content="#f4f7f0"/>
 <title>Inflorax® — Creator Growth Agency</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -358,7 +361,9 @@ nav{
 .pkg-tabs{display:flex;gap:0;border:1px solid var(--line);width:fit-content;border-radius:100px;overflow:hidden;background:var(--white)}
 .pkg-tab{padding:10px 24px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:none;border:none;cursor:pointer;color:var(--ink60);font-family:var(--sans);transition:background .2s,color .2s}
 .pkg-tab.on{background:var(--ink);color:var(--white);border-radius:100px}
-.pkg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px}
+.pkg-grid{display:grid;gap:16px;margin-top:28px}
+.ig-pkg{grid-template-columns:repeat(5,1fr)}
+.yt-pkg{grid-template-columns:repeat(3,1fr)}
 .pkg-c{background:var(--white);border:1px solid var(--line);padding:28px;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s;position:relative;overflow:hidden}
 .pkg-c::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--line);transition:background .3s}
 .pkg-c:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.09)}
@@ -390,7 +395,9 @@ nav{
 
 /* ══ SIMULATOR ══ */
 /* ══ UNIFIED PLAN COMPARISON SIMULATOR ══ */
-.sim-unified{margin-top:48px}
+.sim-unified{margin-top:32px}
+.sim-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%}
+.sim-table-wrap::after{content:'← scroll →';font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.3);display:none;text-align:center;padding:8px;text-transform:uppercase}
 
 /* Platform toggle */
 .sim-plat-toggle{
@@ -454,6 +461,9 @@ nav{
 .sim-table{
   border:1px solid rgba(255,255,255,.08);
   overflow:hidden;
+}
+@media(min-width:769px){
+  .sim-table{min-width:600px}
 }
 
 /* Column grid: label + 4 plan cols */
@@ -1198,18 +1208,105 @@ footer::before{
 .foot-copy{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.25);letter-spacing:.05em}
 .foot-legal{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.2);letter-spacing:.04em}
 
-/* ══ MODAL ══ */
-.modal-ov{display:none;position:fixed;inset:0;z-index:9997;background:rgba(10,10,10,.7);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:20px}
+/* ══ AFTER PILLS ══ */
+.after-pills{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;border:1px solid var(--line);margin-top:48px;
+  overflow:hidden;
+}
+.after-pill{
+  padding:40px 32px 36px;border-right:1px solid var(--line);
+  position:relative;background:var(--white);
+  transition:background .25s;
+  display:flex;flex-direction:column;
+}
+.after-pill:last-child{border-right:none}
+.after-pill:hover{background:var(--bg)}
+.after-pill-dark{background:var(--ink)!important}
+.after-pill-dark:hover{background:#152415!important}
+.after-pill-dark{border-right-color:rgba(255,255,255,.07)!important}
+.ap-num{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--ink30);margin-bottom:20px;text-transform:uppercase}
+.after-pill-dark .ap-num{color:rgba(255,255,255,.25)}
+.ap-ico{font-size:32px;margin-bottom:16px;line-height:1}
+.ap-title{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-.03em;margin-bottom:10px;line-height:1.2}
+.after-pill-dark .ap-title{color:var(--white)}
+.ap-body{font-size:13px;line-height:1.7;color:var(--ink60);margin-bottom:20px;flex:1}
+.after-pill-dark .ap-body{color:rgba(255,255,255,.45)}
+.ap-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);color:var(--ink60);padding:5px 12px;border-radius:100px;background:var(--bg);width:fit-content}
+.ap-tag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0}
+.after-pill-dark .ap-tag{border-color:rgba(45,122,58,.35);color:rgba(255,255,255,.5);background:rgba(45,122,58,.1)}
+@media(max-width:1024px){
+  .after-pills{grid-template-columns:repeat(2,1fr)}
+  .after-pill:nth-child(2){border-right:none}
+  .after-pill:nth-child(3){border-top:1px solid var(--line);border-right:1px solid var(--line)}
+  .after-pill:nth-child(4){border-top:1px solid var(--line);border-right:none}
+}
+@media(max-width:768px){
+  .after-pills{grid-template-columns:1fr}
+  .after-pill{border-right:none!important;border-bottom:1px solid var(--line)}
+  .after-pill:last-child{border-bottom:none}
+}
+
+/* ── PKG CARDS MOBILE ── */
+@media(max-width:768px){
+  .ig-pkg,.yt-pkg{grid-template-columns:1fr;gap:0}
+  .pkg-c{border-radius:0!important;border-left:none!important;border-right:none!important;border-bottom:none!important;border-top:1px solid var(--line)!important;padding:28px 20px}
+  .pkg-c.pop{border-top:2px solid var(--green)!important;border-left:3px solid var(--green)!important;border-right:3px solid var(--green)!important}
+  .pkg-c:last-child{border-bottom:1px solid var(--line)!important}
+  .pkg-pr{font-size:44px}
+  .pkg-name{font-size:20px}
+  .pkg-feats li{font-size:13px}
+  .pkg-btn{padding:16px;font-size:15px;min-height:52px;border-radius:12px}
+  .pkg-tab{padding:12px 16px;font-size:11px;min-height:44px}
+  .sim-slider-row{flex-wrap:wrap;gap:12px}
+  .sim-plat-toggle{width:100%}
+  .sim-plat-btn{flex:1;justify-content:center}
+  .sim-slider-divider{display:none}
+  .sim-slider-label{font-size:8px}
+  .sim-fol-val span:first-child{font-size:20px}
+  .dont-grid{grid-template-columns:1fr}
+  .dont-card{border-right:none!important;border-bottom:1px solid var(--line)!important}
+  .dont-card:last-child{border-bottom:none!important}
+}
+
+/* ══ SOCIAL PROOF ══ */
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);margin-top:48px}
+.proof-card{padding:36px 32px;border-right:1px solid var(--line);background:var(--white);position:relative;overflow:hidden}
+.proof-card:last-child{border-right:none}
+.proof-stars{display:flex;gap:3px;margin-bottom:16px}
+.proof-star{color:var(--green);font-size:14px}
+.proof-quote{font-size:15px;line-height:1.75;color:var(--ink60);margin-bottom:20px;font-style:italic}
+.proof-quote strong{color:var(--ink);font-style:normal;font-weight:700}
+.proof-author{display:flex;align-items:center;gap:12px}
+.proof-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--moss));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0}
+.proof-name{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.proof-handle{font-family:var(--mono);font-size:10px;color:var(--ink30);letter-spacing:.04em}
+.proof-stat{position:absolute;top:24px;right:24px;text-align:right}
+.proof-stat-num{font-size:22px;font-weight:900;color:var(--green);letter-spacing:-.04em;line-height:1}
+.proof-stat-label{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink30)}
+@media(max-width:1024px){.proof-grid{grid-template-columns:1fr}.proof-card{border-right:none;border-bottom:1px solid var(--line)}.proof-card:last-child{border-bottom:none}}
+
+/* ══ 3D TILT + RIPPLE ══ */
+.tilt-card{transform-style:preserve-3d;will-change:transform}
+.tilt-shine{position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:10;opacity:0;transition:opacity .3s}
+.tilt-card:hover .tilt-shine{opacity:1}
+.btn-magnetic{transition:transform .2s cubic-bezier(.16,1,.3,1),box-shadow .2s}
+.btn-magnetic:hover{box-shadow:0 14px 36px rgba(45,122,58,.28)}
+.ripple-el{position:absolute;border-radius:50%;background:rgba(45,122,58,.22);transform:scale(0);animation:rippleOut .65s ease-out forwards;pointer-events:none}
+@keyframes rippleOut{to{transform:scale(4.5);opacity:0}}
+.modal-ov{display:none;position:fixed;inset:0;z-index:9997;background:rgba(10,10,10,.55);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:20px}
 .modal-ov.open{display:flex}
-.modal-box{background:var(--white);border-radius:20px;padding:40px;width:100%;max-width:460px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.2)}
-.mc{position:absolute;top:16px;right:16px;background:var(--bg);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--ink60);transition:background .2s;display:flex;align-items:center;justify-content:center;line-height:1}
-.mc:hover{background:var(--line)}
-.mb-pkg{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink30);border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:20px}
-.mb-h{font-size:24px;font-weight:900;color:var(--ink);margin-bottom:8px;letter-spacing:-.04em}
+.modal-box{background:var(--white);border-radius:24px;padding:0;width:100%;max-width:480px;position:relative;box-shadow:0 32px 100px rgba(0,0,0,.18);overflow:hidden}
+.mc{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:18px;color:rgba(255,255,255,.7);transition:all .2s;display:flex;align-items:center;justify-content:center;line-height:1;z-index:2}
+.mc:hover{background:rgba(255,255,255,.2);color:#fff}
+.mb-plan-pill{background:linear-gradient(135deg,var(--ink) 0%,#162516 100%);padding:22px 32px 20px;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.mb-plan-pill::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 10px rgba(45,122,58,.7)}
+.mb-body-pad{padding:28px 32px 28px}
+.mb-h{font-size:26px;font-weight:900;color:var(--ink);margin-bottom:8px;letter-spacing:-.04em}
 .mb-sub{font-size:14px;color:var(--ink60);line-height:1.65;margin-bottom:24px}
-.mb-btn{width:100%;padding:14px;background:var(--green);color:var(--white);border:none;font-size:13px;font-weight:700;font-family:var(--sans);border-radius:100px;cursor:pointer;transition:background .2s;letter-spacing:-.01em}
+.mb-btn{width:100%;padding:15px;background:var(--green);color:var(--white);border:none;font-size:14px;font-weight:700;font-family:var(--sans);border-radius:100px;cursor:pointer;transition:background .2s;letter-spacing:-.01em;position:relative;overflow:hidden}
 .mb-btn:hover{background:var(--green-d)}
-.mb-trust{margin-top:14px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.mb-trust{margin-top:16px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
 .mb-trust span{font-family:var(--mono);font-size:10px;color:var(--ink30);letter-spacing:.04em}
 
 
@@ -1217,14 +1314,17 @@ footer::before{
 .pkg-grid > * { opacity: 1 !important; transform: none !important; }
 /* ══ RESPONSIVE ══ */
 @media(max-width:1024px){
-  .sec-header{grid-template-columns:1fr}
+  .sec-header{grid-template-columns:1fr;gap:12px}
+  .sec-label{font-size:9px}
+  .body-t{font-size:14px;line-height:1.65}
   .prob-grid,.audit-wrap{grid-template-columns:1fr}
   .prob-l,.audit-l{border-right:none;border-bottom:1px solid var(--line)}
   .who-grid{grid-template-columns:repeat(2,1fr)}
   .proc-grid{grid-template-columns:repeat(2,1fr)}
   .ps:nth-child(2){border-right:none}
   .ps:nth-child(3){border-top:1px solid var(--line)}
-  .pkg-grid{grid-template-columns:repeat(2,1fr)}
+  .ig-pkg{grid-template-columns:repeat(3,1fr)}
+  .yt-pkg{grid-template-columns:repeat(3,1fr)}
   .stats-row{grid-template-columns:repeat(2,1fr)}
   .stat:nth-child(2){border-right:none}
   .stat:nth-child(3){border-top:1px solid var(--line)}
@@ -1236,6 +1336,7 @@ footer::before{
 }
 @media(max-width:768px){
   :root{--nav-h:56px}
+  body{padding-bottom:60px}
   #cur,#cur-ring{display:none!important}
   nav{padding:0 16px;height:var(--nav-h)}
   .nav-links,.nav-meta,.nav-contact{display:none}
@@ -1257,20 +1358,39 @@ footer::before{
   .hb-cta .btn-o{width:100%;justify-content:center;min-height:52px;font-size:14px;color:var(--ink);border-color:var(--ink)}
 
   /* SECTIONS */
-  .sec{padding:56px 0}
+  .sec{padding:48px 0}
   .who-grid{grid-template-columns:1fr}
-  .wc{border-right:none!important}
+  .wc{border-right:none!important;padding:28px 20px}
   .wc:not(:last-child){border-bottom:1px solid var(--line)}
+  .wc-num{font-size:10px!important;letter-spacing:.14em;margin-bottom:16px}
+  .wc-t{font-size:18px;margin-bottom:10px}
+  .wc-b{font-size:13px;line-height:1.65}
+  .wc-t{font-size:20px}
   .prob-grid{grid-template-columns:1fr}
   .prob-l{border-right:none;border-bottom:1px solid var(--line)}
   .prob-r{padding:32px 16px}
   .proc-grid,.proc-panel{display:none}
   .proc-mob{display:block;margin-top:24px}
-  .pkg-grid{grid-template-columns:1fr}
-  .pkg-c{margin-bottom:0}
+  .ig-pkg,.yt-pkg{grid-template-columns:1fr}
+  .pkg-c{margin-bottom:0;border-radius:0}
   .pkg-c:not(:last-child){border-bottom:1px solid var(--line)!important}
+  .pkg-c.pop{border:2px solid var(--green)!important}
+  .pkg-pr{font-size:clamp(36px,8vw,48px)}
+  .pkg-name{font-size:18px}
+  .pkg-why-btn{font-size:9px}
   .stats-row{grid-template-columns:repeat(2,1fr)}
-  .float-cta{bottom:16px;right:16px;padding:13px 22px;font-size:13px}
+  .float-cta{
+    bottom:0;right:0;left:0;
+    border-radius:0;
+    width:100%;
+    text-align:center;
+    justify-content:center;
+    padding:16px;
+    font-size:15px;
+    font-weight:800;
+    box-shadow:0 -4px 24px rgba(0,0,0,.12);
+    border-top:1px solid rgba(255,255,255,.1);
+  }
   footer{grid-template-columns:1fr;padding:36px 20px 32px;gap:28px}
   .foot-meta{display:none}
   .foot-bottom{flex-direction:column;align-items:flex-start;gap:6px}
@@ -1292,10 +1412,14 @@ footer::before{
   .faq-wrap{grid-template-columns:1fr}
   .faq-lc{display:none}
   .faq-list{width:100%}
-  .faq-q{padding:16px;font-size:15px}
+  .faq-q{padding:18px 16px;font-size:15px;min-height:56px;display:flex;align-items:center;justify-content:space-between}
   .faq-a{padding:0 16px}
   .faq-i.open .faq-a{padding:0 16px 16px}
   /* cta section */
+  .about-grid{grid-template-columns:1fr!important}
+  .about-l{border-right:none;border-bottom:1px solid var(--line);padding-bottom:40px}
+  .about-r{padding-top:32px}
+  .about-stats{grid-template-columns:repeat(2,1fr)}
   .cta-sec{padding:60px 0 44px}
   .cta-h2{font-size:clamp(32px,9vw,52px)}
   .cta-btns{flex-direction:column;align-items:center;gap:10px}
@@ -1303,12 +1427,12 @@ footer::before{
   .cta-trust{font-size:9px;padding:0 16px}
 }
 @media(max-width:480px){
-  .hero-h1{font-size:clamp(36px,12vw,52px)}
-  .pkg-grid{grid-template-columns:1fr}
+  .hero-h1{font-size:clamp(36px,10vw,52px);line-height:1.05}
+  .hero-tag{font-size:9px;letter-spacing:.12em}
+  .hero-sub{font-size:14px}
+  .ig-pkg,.yt-pkg{grid-template-columns:1fr}
   .pkg-tabs{width:100%}
   .pkg-tab{flex:1;text-align:center}
-  .pkg-c{margin-bottom:0}
-  .pkg-c:not(:last-child){border-bottom:1px solid var(--line)!important}
   .hb-cta{flex-direction:column;align-items:stretch}
   .hb-cta .btn-d,.hb-cta .btn-o{width:100%;justify-content:center}
   .cta-btns{flex-direction:column;align-items:center;gap:10px}
@@ -1329,71 +1453,142 @@ footer::before{
 #intro{
   position:fixed;inset:0;z-index:99999;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:var(--ink);
+  background:radial-gradient(ellipse at 50% 60%,#0a1f0c 0%,#050d06 55%,#020802 100%);
   overflow:hidden;
-  animation:introAutoOut .6s ease 2.6s forwards;
+  animation:introAutoOut .7s ease 2.8s forwards;
 }
 @keyframes introAutoOut{0%{opacity:1;pointer-events:all}100%{opacity:0;pointer-events:none}}
 #intro.gone{display:none!important}
-#intro.exiting{animation:introOut 1.1s cubic-bezier(.76,0,.24,1) forwards}
-@keyframes introOut{0%{opacity:1;transform:scale(1)}30%{opacity:1;transform:scale(1.02)}100%{opacity:0;transform:scale(1.08);pointer-events:none}}
-#intro-content{position:relative;z-index:2;text-align:center;padding:0 24px}
-.intro-tag{
-  font-family:var(--mono);font-size:10px;letter-spacing:.32em;text-transform:uppercase;
-  color:var(--green);opacity:0;transform:translateY(12px);
-  animation:introFade .7s cubic-bezier(.16,1,.3,1) .3s forwards;
-  display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:24px;
+#intro.exiting{animation:introOut .8s cubic-bezier(.76,0,.24,1) forwards}
+@keyframes introOut{to{opacity:0;transform:scale(1.06);pointer-events:none}}
+
+/* Star canvas */
+#intro-stars{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;
 }
-.intro-tag::before,.intro-tag::after{content:'';width:28px;height:1px;background:var(--green);opacity:.5}
+
+/* Central glow orb behind wordmark */
+.intro-orb{
+  position:absolute;
+  width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(45,122,58,.18) 0%,rgba(45,122,58,.06) 45%,transparent 72%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:orbPulse 3s ease-in-out infinite;
+  pointer-events:none;z-index:1;
+}
+.intro-orb-ring{
+  position:absolute;
+  width:340px;height:340px;border-radius:50%;
+  border:1px solid rgba(45,122,58,.08);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:orbRing 4s ease-in-out infinite;
+  pointer-events:none;z-index:1;
+}
+@keyframes orbPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.8}50%{transform:translate(-50%,-50%) scale(1.12);opacity:1}}
+@keyframes orbRing{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.4}50%{transform:translate(-50%,-50%) scale(1.2);opacity:.1}}
+
+/* Content */
+#intro-content{
+  position:relative;z-index:3;text-align:center;
+  padding:0 28px;width:100%;max-width:480px;
+  display:flex;flex-direction:column;align-items:center;
+}
+
+/* Agency tag */
+.intro-tag{
+  font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(80,200,95,.6);
+  display:flex;align-items:center;gap:14px;justify-content:center;
+  margin-bottom:24px;
+  opacity:0;animation:introFade .7s ease .3s forwards;
+}
+.intro-tag-line{display:block;width:22px;height:1px;background:rgba(45,122,58,.4)}
 @keyframes introFade{to{opacity:1;transform:none}}
+
+/* Wordmark */
 .intro-wordmark{
-  font-family:var(--sans);font-size:clamp(56px,10vw,130px);font-weight:900;
-  color:var(--white);letter-spacing:-.05em;line-height:1;
+  font-family:var(--sans);
+  font-size:clamp(52px,14vw,96px);
+  font-weight:900;color:var(--white);
+  letter-spacing:-.05em;line-height:1;
   opacity:0;transform:translateY(20px);
   animation:introFade .9s cubic-bezier(.16,1,.3,1) .5s forwards;
+  text-shadow:0 0 60px rgba(45,122,58,.3),0 0 120px rgba(45,122,58,.1);
+  position:relative;
 }
-.intro-wordmark span{color:var(--green)}
+.intro-wordmark span{
+  color:var(--green);
+  text-shadow:0 0 20px rgba(45,122,58,.8),0 0 40px rgba(45,122,58,.4);
+}
+
+/* Tagline */
+.intro-tagline{
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(80,200,95,.55);
+  margin-top:10px;
+  opacity:0;animation:introFade .7s ease .75s forwards;
+}
+
+/* Sub */
 .intro-sub{
-  font-size:clamp(13px,1.6vw,17px);color:rgba(255,255,255,.4);
-  letter-spacing:.04em;margin-top:14px;
-  opacity:0;animation:introFade .8s cubic-bezier(.16,1,.3,1) .8s forwards;
+  font-size:clamp(13px,3.5vw,15px);
+  color:rgba(255,255,255,.32);line-height:1.7;
+  margin-top:10px;
+  opacity:0;animation:introFade .8s ease .9s forwards;
 }
-.intro-sub em{color:var(--green);font-style:italic;font-family:"Playfair Display",serif}
-/* progress bar */
+.intro-sub em{color:rgba(80,200,95,.75);font-style:italic;font-family:"Playfair Display",serif}
+
+/* Stats */
+.intro-stats{
+  display:flex;align-items:stretch;
+  margin-top:32px;
+  border:1px solid rgba(45,122,58,.15);
+  background:rgba(45,122,58,.04);
+  border-radius:10px;overflow:hidden;
+  opacity:0;animation:introFade .7s ease 1.1s forwards;
+  width:100%;
+}
+.intro-stat{flex:1;padding:14px 10px;text-align:center}
+.intro-stat-div{width:1px;background:rgba(45,122,58,.15)}
+.intro-stat-n{
+  font-size:14px;font-weight:800;color:rgba(255,255,255,.75);
+  letter-spacing:-.02em;line-height:1;margin-bottom:4px;
+}
+.intro-stat-l{font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.2)}
+
+/* Tap hint */
+.intro-hint{
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.15);
+  margin-top:28px;
+  opacity:0;animation:introHintPulse 2.5s ease 1.5s infinite;
+}
+@keyframes introHintPulse{0%,100%{opacity:0}50%{opacity:.55}}
+
+/* Progress bar */
 #intro-progress{
   position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:rgba(45,122,58,.15);overflow:hidden;
+  background:rgba(45,122,58,.08);overflow:hidden;z-index:4;
 }
 #intro-bar{
   height:100%;width:0%;
-  background:linear-gradient(90deg,var(--green),rgba(0,160,255,.8));
-  animation:introBar 2.6s cubic-bezier(.4,0,.2,1) .2s forwards;
+  background:linear-gradient(90deg,rgba(45,122,58,.5),var(--green),rgba(80,200,95,.9));
+  box-shadow:0 0 12px rgba(45,122,58,.6);
+  animation:introBar 2.8s cubic-bezier(.4,0,.2,1) .1s forwards;
 }
 @keyframes introBar{0%{width:0%}100%{width:100%}}
-/* corner brackets */
-.intro-corner{
-  position:absolute;width:36px;height:36px;
-  opacity:0;animation:introFade .6s ease 1.2s forwards;
-}
-.intro-corner::before,.intro-corner::after{content:'';position:absolute;background:rgba(45,122,58,.5)}
-.intro-corner::before{width:100%;height:1.5px;top:0;left:0}
-.intro-corner::after{width:1.5px;height:100%;top:0;left:0}
-.ic-tl{top:28px;left:28px}
-.ic-tr{top:28px;right:28px;transform:scaleX(-1)}
-.ic-bl{bottom:28px;left:28px;transform:scaleY(-1)}
-.ic-br{bottom:28px;right:28px;transform:scale(-1)}
-/* floating dots */
+
+/* Floating particles (keep for JS) */
 @keyframes introFloat{
   0%{transform:translateY(0) translateX(0);opacity:0}
-  10%{opacity:.6}90%{opacity:.2}
-  100%{transform:translateY(-120px) translateX(var(--dx));opacity:0}
+  10%{opacity:.5}90%{opacity:.1}
+  100%{transform:translateY(-140px) translateX(var(--dx));opacity:0}
 }
 .intro-particle{
   position:absolute;border-radius:50%;background:var(--green);
-  animation:introFloat var(--dur) ease-in var(--delay) infinite;
-  opacity:0;
+  animation:introFloat var(--dur) ease-in var(--delay) infinite;opacity:0;z-index:2;
 }
-
 /* ══ HERO VISUAL / PHONE MOCKUP ══ */
 .hero-vis-wrap{
   background:var(--ink);
@@ -2049,7 +2244,15 @@ footer::before{
 .pop-tag{background:var(--green)!important}
 
 /* ── Modal box ── */
-.modal-box{background:var(--cream);border:1px solid var(--line)}
+.modal-box{border:1px solid var(--line2);border-radius:20px}
+@media(max-width:480px){
+  .modal-ov{padding:0;align-items:flex-end}
+  .modal-box{border-radius:20px 20px 0 0;max-width:100%}
+  .mb-plan-pill{padding:18px 20px 16px}
+  .mb-body-pad{padding:24px 20px 32px}
+  .mb-h{font-size:22px}
+  .mb-btn{font-size:15px;padding:16px}
+}
 .mb-btn{background:var(--green)!important}
 .mb-btn:hover{background:var(--green-d)!important}
 
@@ -2112,22 +2315,266 @@ footer::before{
   opacity:1!important;
   transform:none!important;
 }
+
+/* ══ BADGE LIVE COUNTER ══ */
+.badge-live{
+  display:flex;align-items:center;gap:5px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.1em;
+  color:rgba(255,255,255,.6);margin-top:6px;
+  text-transform:uppercase;
+}
+.badge-live-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);flex-shrink:0;
+  animation:livePulse 2s ease-in-out infinite;
+}
+@keyframes livePulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(45,122,58,.5)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(45,122,58,0)}}
+
+/* ══ SCROLL COUNT-UP ══ */
+.count-up{display:inline-block;transition:color .3s}
+.count-up.counted{color:var(--green)}
+
+/* ══ WHAT WE DON'T DO ══ */
+.dont-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;border:1px solid var(--line);margin-top:48px;
+  overflow:hidden;
+}
+.dont-card{
+  padding:36px 32px;border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  position:relative;overflow:hidden;
+  transition:background .2s;
+  background:var(--white);
+}
+.dont-card:hover{background:var(--bg)}
+.dont-card:nth-child(3n){border-right:none}
+.dont-card:nth-child(4),.dont-card:nth-child(5),.dont-card:nth-child(6){border-bottom:none}
+.dont-x{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(122,53,37,.08);
+  color:var(--stem);font-size:14px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;flex-shrink:0;
+  transition:all .3s;
+}
+.dont-card:hover .dont-x{background:rgba(122,53,37,.14);transform:scale(1.1)}
+.dont-title{font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.03em;margin-bottom:8px;line-height:1.2}
+.dont-body{font-size:13px;line-height:1.7;color:var(--ink60)}
+@media(max-width:1024px){.dont-grid{grid-template-columns:repeat(2,1fr)}.dont-card:nth-child(2n){border-right:none}.dont-card:nth-child(3n){border-right:1px solid var(--line)}.dont-card:nth-child(5),.dont-card:nth-child(6){border-bottom:none}.dont-card:nth-child(4){border-bottom:1px solid var(--line)}}
+@media(max-width:768px){.dont-grid{grid-template-columns:1fr}.dont-card{border-right:none!important;border-bottom:1px solid var(--line)!important}.dont-card:last-child{border-bottom:none!important}}
+
+/* ══ PRICING TRANSPARENCY ══ */
+.pkg-why{margin-top:10px;border-top:1px solid var(--line)}
+.pkg-c.pop .pkg-why{border-top-color:rgba(255,255,255,.1)}
+.pkg-why-btn{
+  width:100%;background:none;border:none;
+  font-family:var(--mono);font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink30);
+  cursor:pointer;padding:10px 0 6px;text-align:left;
+  transition:color .2s;display:flex;align-items:center;gap:6px;
+}
+.pkg-why-btn:hover{color:var(--green)}
+.pkg-why-btn.open{color:var(--green)}
+.pkg-why-btn.open::after{content:'↑'}
+.pkg-c.pop .pkg-why-btn{color:rgba(255,255,255,.3)}
+.pkg-c.pop .pkg-why-btn:hover{color:rgba(255,255,255,.7)}
+.pkg-why-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s cubic-bezier(.16,1,.3,1), padding .3s;
+  font-family:var(--mono);font-size:10px;letter-spacing:.04em;
+  line-height:1.7;color:var(--ink60);padding:0;
+}
+.pkg-why-body.open{max-height:120px;padding-bottom:12px}
+.pkg-c.pop .pkg-why-body{color:rgba(255,255,255,.45)}
+
+/* ══ LEAF MICRO-INTERACTIONS ══ */
+.leaf-cluster{cursor:pointer}
+.leaf-cluster svg{transition:transform .6s cubic-bezier(.16,1,.3,1),filter .4s}
+.leaf-cluster:hover svg{filter:drop-shadow(0 8px 24px rgba(45,122,58,.25))}
+.leaf-cluster.rustling svg{animation:leafRustle .7s cubic-bezier(.16,1,.3,1)}
+@keyframes leafRustle{0%{transform:rotate(0deg) scale(1)}25%{transform:rotate(-4deg) scale(1.04)}50%{transform:rotate(3deg) scale(1.02)}75%{transform:rotate(-2deg) scale(1.01)}100%{transform:rotate(0deg) scale(1)}}
+
+@media(max-width:768px){
+  .sim-table-wrap::after{display:block}
+  .sim-slider-row{flex-wrap:wrap;padding:14px 16px}
+  .sim-fol-val{min-width:auto}
+}
+
+/* ══ MOBILE SIMULATOR CAROUSEL ══ */
+.sim-carousel{padding-bottom:8px}
+.sim-cards{position:relative;min-height:380px}
+.sim-card{
+  display:none;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  padding:24px 20px 20px;
+  flex-direction:column;
+  position:relative;
+  animation:cardIn .3s cubic-bezier(.16,1,.3,1);
+}
+.sim-card.sim-card-active{display:flex}
+.sim-card-pop{background:rgba(12,40,18,.85)!important;border:1px solid rgba(45,122,58,.35)!important}
+.sim-card-pop::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--green)}
+@keyframes cardIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.smc-badge{font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--green);padding:4px 12px;border-radius:100px;display:inline-flex;width:fit-content;margin-bottom:12px;box-shadow:0 3px 10px rgba(45,122,58,.3)}
+.smc-tier{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:5px}
+.sim-card-pop .smc-tier{color:rgba(80,200,95,.5)}
+.smc-name{font-size:22px;font-weight:900;color:var(--white);letter-spacing:-.04em;margin-bottom:6px;line-height:1.1}
+.smc-price{font-size:42px;font-weight:900;color:var(--white);letter-spacing:-.06em;line-height:1}
+.sim-card-pop .smc-price{color:var(--green)}
+.smc-days{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.25);margin-top:4px}
+.smc-divider{height:1px;background:rgba(255,255,255,.07);margin:16px 0}
+.sim-card-pop .smc-divider{background:rgba(45,122,58,.2)}
+.smc-stat-label{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:8px}
+.smc-num{font-size:38px;font-weight:900;color:var(--white);letter-spacing:-.05em;line-height:1;margin-bottom:8px;transition:all .45s cubic-bezier(.16,1,.3,1)}
+.sim-card-pop .smc-num{color:var(--green)}
+.smc-reach{font-family:var(--mono);font-size:13px;font-weight:600;color:rgba(255,255,255,.4);margin-bottom:4px;transition:all .4s}
+.sim-card-pop .smc-reach{color:rgba(80,200,95,.7)}
+.smc-best{font-size:12px;color:rgba(255,255,255,.3);font-style:italic;margin-bottom:16px}
+.sim-card-pop .smc-best{color:rgba(255,255,255,.45)}
+.sim-card .sc-cta{width:100%;margin-top:auto}
+.sim-dots{display:flex;justify-content:center;gap:8px;padding:20px 0 8px}
+.sim-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);border:none;cursor:pointer;transition:all .25s;padding:0;min-height:unset}
+.sim-dot-on{background:var(--green)!important;width:22px;border-radius:4px!important}
+.sim-arrows{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4px}
+.sim-arrow{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;min-height:unset}
+.sim-arrow:hover{background:rgba(255,255,255,.14);color:#fff}
+.sim-arrow-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);text-align:center;flex:1}
+@media(max-width:768px){
+  .sim-table-wrap{overflow:visible!important}
+  #sim-table{min-width:unset!important}
+  .sim-table-wrap::after{display:none!important}
+}
+
+/* ── MOBILE TAP TARGETS ── */
+@media(max-width:768px){
+  a,button,[role=button]{min-height:44px}
+  .foot-links a{min-height:36px;display:flex;align-items:center}
+  .pkg-why-btn{min-height:40px}
+  .faq-q{min-height:56px}
+  .drawer-item{min-height:52px;font-size:16px}
+  .nav-cta-btn{min-height:44px;font-size:14px;padding:12px 20px}
+  .sim-plat-btn{min-height:44px;font-size:14px}
+  .sc-cta{min-height:48px;font-size:13px}
+  .pkg-tab{min-height:44px}
+}
+
+/* ════ MOBILE-FIRST POLISH ════ */
+@media(max-width:768px){
+
+  /* Hero */
+  .hero-body{padding:20px 16px 16px!important}
+  .hero-tag{margin-bottom:14px}
+  .hero-h1{margin-bottom:12px}
+  .hero-mobile-cta .btn-d{min-height:56px;font-size:16px;letter-spacing:-.02em}
+  .hero-mobile-cta-sec{min-height:50px;font-size:15px}
+  .hero-mobile-stats{margin-top:16px}
+  .hms-num{font-size:18px}
+
+  /* Ticker */
+  .tk-track{animation-duration:20s}
+
+  /* Sections */
+  .sec{padding:52px 0}
+  .sec-label{font-size:9px;letter-spacing:.15em}
+  .h2{font-size:clamp(28px,8vw,42px);line-height:1.08}
+  .body-t{font-size:14px;line-height:1.65}
+  .sec-header{gap:14px;margin-bottom:36px}
+
+  /* Problem */
+  .prob-l{padding:32px 16px}
+  .prob-r{padding:32px 16px}
+  .prob-quote{font-size:15px}
+  .viz-meter-label{font-size:11px}
+
+  /* Who */
+  .wc-t{font-size:18px}
+  .wc-b{font-size:13px;line-height:1.65}
+
+  /* Packages */
+  .pkg-plat-head{font-size:9px;padding:14px 16px}
+  .pkg-tier{font-size:9px}
+  .pkg-name{font-size:19px}
+  .pkg-sub{font-size:12px;margin-bottom:12px}
+  .pkg-feats{margin-bottom:16px}
+  .pkg-feats li{font-size:12px}
+  .pkg-why-btn{min-height:36px}
+
+  /* After pills */
+  .ap-title{font-size:16px}
+  .ap-body{font-size:13px}
+
+  /* About */
+  .about-tagline{font-size:clamp(22px,6vw,34px)}
+  .as-v{font-size:22px}
+  .as-l{font-size:11px}
+
+  /* Don't section */
+  .dont-title{font-size:15px}
+  .dont-body{font-size:13px}
+
+  /* FAQ */
+  .faq-q{font-size:14px;padding:16px;line-height:1.4}
+  .faq-a p{font-size:13px;line-height:1.7}
+
+  /* CTA section */
+  .cta-sub{font-size:14px;padding:0 16px}
+
+  /* Footer */
+  .foot-logo{font-size:18px}
+  .foot-tagline{font-size:12px}
+  .foot-links a{font-size:15px;padding:4px 0}
+  .foot-copy,.foot-legal{font-size:9px}
+
+  /* Sim table scroll hint */
+  .sim-table-wrap::after{display:block}
+
+  /* Smooth scrolling already handled by CSS */
+}
+
+/* Extra small — 375px and below */
+@media(max-width:375px){
+  .h2{font-size:28px}
+  .hero-h1{font-size:36px}
+  .pkg-pr{font-size:38px}
+  .hb-cta .btn-d,.hb-cta .btn-o{font-size:14px}
+  .float-cta{font-size:14px;padding:14px}
+}
 </style>
 </head>
 <body>
 
 <!-- ══ PRELOADER ══ -->
 <div id="intro">
-  <div class="intro-corner ic-tl"></div>
-  <div class="intro-corner ic-tr"></div>
-  <div class="intro-corner ic-bl"></div>
-  <div class="intro-corner ic-br"></div>
+  <!-- Star canvas -->
+  <canvas id="intro-stars"></canvas>
+
+  <!-- Central glow orb -->
+  <div class="intro-orb"></div>
+  <div class="intro-orb-ring"></div>
+
+  <!-- Main content -->
   <div id="intro-content">
-    <div class="intro-tag">Instagram &amp; YouTube Growth Agency</div>
+    <div class="intro-tag">
+      <span class="intro-tag-line"></span>
+      Creator Growth Agency
+      <span class="intro-tag-line"></span>
+    </div>
     <div class="intro-wordmark">INFLORAX<span>●</span></div>
-    <p class="intro-tagline-small" style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:rgba(80,200,90,.7);text-transform:uppercase;margin:8px 0 4px">Where visibility becomes growth.</p>
-    <p class="intro-sub">Strategic content promotion for creators who are serious about being <em>seen.</em></p>
+    <div class="intro-tagline">Where visibility becomes growth.</div>
+    <p class="intro-sub">Strategic content promotion for creators<br>who are serious about being <em>seen.</em></p>
+    <div class="intro-stats">
+      <div class="intro-stat"><div class="intro-stat-n">IG + YT</div><div class="intro-stat-l">Both platforms</div></div>
+      <div class="intro-stat-div"></div>
+      <div class="intro-stat"><div class="intro-stat-n">24–72h</div><div class="intro-stat-l">Campaign start</div></div>
+      <div class="intro-stat-div"></div>
+      <div class="intro-stat"><div class="intro-stat-n">0</div><div class="intro-stat-l">Passwords needed</div></div>
+    </div>
+    <div class="intro-hint">Tap anywhere to continue</div>
   </div>
+
+  <!-- Progress bar -->
   <div id="intro-progress"><div id="intro-bar"></div></div>
 </div>
 
@@ -2136,7 +2583,7 @@ footer::before{
 <div id="prog"></div>
 
 <!-- Float CTA -->
-<button class="float-cta" onclick="openAudit()">Free Audit →</button>
+<button class="float-cta btn-magnetic" onclick="openAudit()">Free Audit →</button>
 
 <!-- ══ NAV ══ -->
 <nav id="nav">
@@ -2150,7 +2597,7 @@ footer::before{
   <div class="nav-meta">
     <span class="nav-time" id="nav-time">—</span>
   </div>
-  <button class="nav-contact" onclick="openAudit()">Free Audit</button>
+  <button class="nav-contact btn-magnetic" onclick="openAudit()">Free Audit</button>
   <button class="ham" id="ham" onclick="toggleMenu()"><span></span><span></span><span></span></button>
 </nav>
 <div class="drawer" id="drawer">
@@ -2192,7 +2639,7 @@ footer::before{
     </div>
 
     <!-- ══ TOP-LEFT BRANCH CLUSTER ══ -->
-    <div class="branch-cluster bc-tl" data-depth="0.05">
+    <div class="branch-cluster bc-tl leaf-cluster" id="lc-tl" data-depth="0.05">
       <svg viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg" overflow="visible">
         <!-- Main branch -->
         <path class="sc" stroke-width="4.5" d="M0,0 C40,30 80,60 130,90 C175,118 220,130 270,125"/>
@@ -2290,7 +2737,7 @@ footer::before{
     </div>
 
     <!-- ══ TOP-RIGHT BRANCH CLUSTER ══ -->
-    <div class="branch-cluster bc-tr" data-depth="0.04">
+    <div class="branch-cluster bc-tr leaf-cluster" id="lc-tr" data-depth="0.04">
       <svg viewBox="0 0 440 340" xmlns="http://www.w3.org/2000/svg" overflow="visible" style="transform:scaleX(-1)">
         <!-- Main branch -->
         <path class="sc" stroke-width="4" d="M0,0 C35,25 75,55 120,82 C165,108 210,120 255,115"/>
@@ -2364,7 +2811,7 @@ footer::before{
     </div>
 
     <!-- ══ BOTTOM-LEFT BRANCH CLUSTER ══ -->
-    <div class="branch-cluster bc-bl" data-depth="0.06">
+    <div class="branch-cluster bc-bl leaf-cluster" id="lc-bl" data-depth="0.06">
       <svg viewBox="0 0 460 360" xmlns="http://www.w3.org/2000/svg" overflow="visible" style="transform:scaleY(-1)">
         <!-- Main branch going up-right -->
         <path class="sc" stroke-width="4.2" d="M0,5 C38,28 78,58 128,85 C172,110 218,122 268,116"/>
@@ -2443,7 +2890,7 @@ footer::before{
     </div>
 
     <!-- ══ BOTTOM-RIGHT BRANCH CLUSTER ══ -->
-    <div class="branch-cluster bc-br" data-depth="0.05">
+    <div class="branch-cluster bc-br leaf-cluster" id="lc-br" data-depth="0.05">
       <svg viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg" overflow="visible" style="transform:scale(-1,-1)">
         <!-- Main branch -->
         <path class="sc" stroke-width="4.5" d="M0,5 C40,30 85,62 135,90 C182,116 228,128 278,122"/>
@@ -2555,6 +3002,7 @@ footer::before{
     <div class="badge-dot"></div>
     <div class="badge-dot badge-dot2"></div>
     <div class="badge-core">
+      <div class="badge-live"><span class="badge-live-dot"></span><span id="badge-live-num">12</span> live</div>
       <div class="badge-num" id="badge-counter">New</div>
       <div class="badge-label">just<br>launched</div>
     </div>
@@ -2577,7 +3025,7 @@ footer::before{
     </div>
     <!-- Mobile CTA -->
     <div class="hero-mobile-cta">
-      <button class="btn-d btn-blue" onclick="go('packages')">Start My Growth →</button>
+      <button class="btn-d btn-blue btn-magnetic" onclick="go('packages')">Start My Growth →</button>
       <button class="hero-mobile-cta-sec" onclick="go('process')">See How It Works</button>
     </div>
   </div>
@@ -2587,7 +3035,7 @@ footer::before{
       You try, you post, you stay consistent — but your videos don't reach enough people. Not because your content is bad… but because it's not getting the visibility it needs. We help your content finally get seen.
     </div>
     <div class="hb-cta rv" style="transition-delay:.1s;display:flex;gap:10px;flex-wrap:wrap">
-      <button class="btn-d btn-blue" onclick="go('packages')">Start My Growth →</button>
+      <button class="btn-d btn-blue btn-magnetic" onclick="go('packages')">Start My Growth →</button>
       <button class="btn-o" onclick="go('process')">See How It Works</button>
     </div>
   </div>
@@ -2611,71 +3059,6 @@ footer::before{
     <div class="tk-item"><span class="tk-sep"></span>Real strategy, no bots</div>
   </div>
 </div>
-
-<!-- ══ HERO VISUAL ══ -->
-<div class="hero-vis-wrap">
-  <div class="hero-vis-inner">
-    <div class="hv-left">
-      <div class="hv-tag">Real results · Live campaigns</div>
-      <h2 class="hv-h">You've been trying…<br>but your content still isn't<br><em>reaching people.</em></h2>
-      <div class="hv-p">
-  <p style="margin-bottom:10px">You post regularly. You put effort into your videos. You try different ideas.</p>
-  <p style="margin-bottom:10px;color:rgba(255,255,255,.55)">But your reach stays low. Your engagement doesn't grow. And slowly… it starts to feel frustrating.</p>
-  <p style="margin-bottom:14px;font-weight:600;color:var(--green)">It's not your content. It's your visibility.</p>
-  <p style="font-size:13px;color:rgba(255,255,255,.4)">We help your content reach the right audience so your growth can finally start moving.</p>
-</div>
-      <div class="hv-stats">
-        <div class="hv-stat">
-          <div class="hv-stat-n"><span>7</span></div>
-          <div class="hv-stat-l">Packages available</div>
-        </div>
-        <div class="hv-stat">
-          <div class="hv-stat-n"><span>24</span><span class="hv-stat-suf">–72h</span></div>
-          <div class="hv-stat-l">Campaign start time</div>
-        </div>
-        <div class="hv-stat">
-          <div class="hv-stat-n"><span>IG</span><span class="hv-stat-suf">+YT</span></div>
-          <div class="hv-stat-l">Both platforms</div>
-        </div>
-      </div>
-    </div>
-    <div class="hv-right">
-      <!-- phone -->
-      <div class="hv-phone">
-        <div class="hv-phone-notch"></div>
-        <div class="hv-phone-screen">
-          <div class="hv-reel-img"></div>
-          <div class="hv-stat-row"><div class="hv-stat-icon">♥</div><div class="hv-stat-bar" style="animation-delay:0s"></div><div class="hv-stat-num">24K</div></div>
-          <div class="hv-stat-row"><div class="hv-stat-icon">↗</div><div class="hv-stat-bar" style="animation-delay:.4s"></div><div class="hv-stat-num">180K</div></div>
-          <div class="hv-stat-row"><div class="hv-stat-icon">◎</div><div class="hv-stat-bar" style="animation-delay:.8s"></div><div class="hv-stat-num">432</div></div>
-          <div class="hv-phone-actions">
-            <div class="hv-pa"><div class="hv-pa-ico">♥</div><div>Like</div></div>
-            <div class="hv-pa"><div class="hv-pa-ico">✉</div><div>Share</div></div>
-            <div class="hv-pa"><div class="hv-pa-ico">◎</div><div>Save</div></div>
-          </div>
-        </div>
-      </div>
-      <!-- stat cards -->
-      <div class="hv-mc hv-mc1">
-        <div class="hv-mc-label">Campaign start</div>
-        <div class="hv-mc-value"><span>24</span>–72h</div>
-        <div class="hv-mc-trend">↑ After onboarding</div>
-      </div>
-      <div class="hv-mc hv-mc2">
-        <div class="hv-mc-label">Platforms</div>
-        <div class="hv-mc-value"><span>IG</span>+YT</div>
-        <div class="hv-mc-trend">↑ Both covered</div>
-      </div>
-      <!-- info pills -->
-      <div class="hv-feed">
-        <div class="hv-feed-item"><div class="hv-av">🔒</div><div class="hv-feed-text"><b>No password</b> ever required from you</div><div class="hv-dot"></div></div>
-        <div class="hv-feed-item"><div class="hv-av">✓</div><div class="hv-feed-text"><b>No contracts</b> — pay once, we deliver</div><div class="hv-dot"></div></div>
-        <div class="hv-feed-item"><div class="hv-av">⚡</div><div class="hv-feed-text"><b>Real promotion</b> — no bots, no fake follows</div><div class="hv-dot"></div></div>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 
 <!-- ══ PROBLEM ══ -->
@@ -2747,9 +3130,9 @@ footer::before{
       <p class="body-t">No matter where you are in your journey — this is the stage where most creators struggle.</p>
     </div>
     <div class="who-grid sg">
-      <div class="wc"><div class="wc-num">01 / New creators</div><div class="wc-t">You're posting… but no one is seeing it</div><p class="wc-b">You're trying your best. Posting regularly. Following trends. But your videos don't reach people. You're waiting for something to click — but it never does.<br><br><strong>👉 You just need that first visibility push.</strong></p></div>
-      <div class="wc"><div class="wc-num">02 / Stalled creators</div><div class="wc-t">Your growth suddenly stopped</div><p class="wc-b">You had some posts doing okay before. But now everything feels slow again. Less reach. Less engagement. And you don't know what changed.<br><br><strong>👉 You need momentum again.</strong></p></div>
-      <div class="wc"><div class="wc-num">03 / Committed creators</div><div class="wc-t">You're serious… but something is missing</div><p class="wc-b">You care about your content. You want to grow properly. But without visibility, even good content stays hidden.<br><br><strong>👉 You need the right push to move forward.</strong></p></div>
+      <div class="wc tilt-card"><div class="tilt-shine"></div><div class="wc-num">01 / New creators</div><div class="wc-t">You're posting… but no one is seeing it</div><p class="wc-b">You're trying your best. Posting regularly. Following trends. But your videos don't reach people. You're waiting for something to click — but it never does.<br><br><strong>👉 You just need that first visibility push.</strong></p></div>
+      <div class="wc tilt-card"><div class="tilt-shine"></div><div class="wc-num">02 / Stalled creators</div><div class="wc-t">Your growth suddenly stopped</div><p class="wc-b">You had some posts doing okay before. But now everything feels slow again. Less reach. Less engagement. And you don't know what changed.<br><br><strong>👉 You need momentum again.</strong></p></div>
+      <div class="wc tilt-card"><div class="tilt-shine"></div><div class="wc-num">03 / Committed creators</div><div class="wc-t">You're serious… but something is missing</div><p class="wc-b">You care about your content. You want to grow properly. But without visibility, even good content stays hidden.<br><br><strong>👉 You need the right push to move forward.</strong></p></div>
     </div>
   </div>
   <p style="text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink30);margin-top:32px">👉 Wherever you are — this is the stage we help you move past.</p>
@@ -2814,18 +3197,18 @@ footer::before{
       </div>
     </div>
 
-    <div id="ig-pkg" class="pkg-grid" style="display:grid;grid-template-columns:repeat(5,1fr)">
-      <div class="pkg-c"><div class="pkg-tier">Spark</div><div class="pkg-name">Getting Started</div><div class="pkg-sub">For creators who are trying but not getting reach</div><div class="pkg-pr"><sup>$</sup>79</div><div class="pkg-was">was $129 — launch offer</div><ul class="pkg-feats"><li>Your reels start reaching more people</li><li>Initial visibility boost for your content</li><li>Better engagement signals on your posts</li><li>Your profile starts getting noticed</li><li>Delivered within 5–7 days</li></ul><button class="pkg-btn" onclick="openModal('Instagram — Spark','$79')">Try this plan →</button></div>
-      <div class="pkg-c pop"><div class="pop-tag">Most popular</div><div class="pkg-tier">Ignite</div><div class="pkg-name">Start Getting Seen</div><div class="pkg-sub">For creators stuck with low reach</div><div class="pkg-pr"><sup>$</sup>199</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Strong visibility push for multiple reels</li><li>Your content reaches a larger audience</li><li>Higher engagement on your posts</li><li>Your profile starts building momentum</li><li>Delivered within 7–10 days</li></ul><button class="pkg-btn" onclick="openModal('Instagram — Ignite','$199')">Start this plan →</button></div>
-      <div class="pkg-c"><div class="pkg-tier">Momentum</div><div class="pkg-name">Grow Steadily</div><div class="pkg-sub">For creators who want consistent growth</div><div class="pkg-pr"><sup>$</sup>399</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Continuous visibility for your content</li><li>Stronger engagement over time</li><li>Better audience targeting</li><li>Your profile starts growing more consistently</li><li>Delivered within 10–14 days</li></ul><button class="pkg-btn" onclick="openModal('Instagram — Momentum','$399')">Start this plan →</button></div>
-      <div class="pkg-c"><div class="pkg-tier">Influence</div><div class="pkg-name">Become a Creator</div><div class="pkg-sub">For creators serious about building a strong presence</div><div class="pkg-pr"><sup>$</sup>799</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Long-term visibility support</li><li>Strong reach and engagement growth</li><li>Profile positioning improvement</li><li>Clear content direction</li><li>Personal growth guidance</li><li>Delivered within 14–21 days</li></ul><button class="pkg-btn" onclick="openModal('Instagram — Influence','$799')">Start this plan →</button></div>
-      <div class="pkg-c"><div class="pkg-tier">Icon</div><div class="pkg-name">Authority</div><div class="pkg-sub">For creators building a media brand</div><div class="pkg-pr"><sup>$</sup>1,499</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Full-scale promotion system</li><li>Complete profile + content overhaul</li><li>90-day content strategy</li><li>2× 1-on-1 strategy calls</li><li>Brand deal + collab outreach</li><li>Priority support</li></ul><button class="pkg-btn" onclick="openModal('Instagram — Icon','$1,499')">Start this plan →</button></div>
+    <div id="ig-pkg" class="pkg-grid ig-pkg">
+      <div class="pkg-c tilt-card"><div class="tilt-shine"></div><div class="pkg-tier">Spark</div><div class="pkg-name">Getting Started</div><div class="pkg-sub">For creators who are trying but not getting reach</div><div class="pkg-pr"><sup>$</sup>79</div><div class="pkg-was">was $129 — launch offer</div><ul class="pkg-feats"><li>Your reels start reaching more people</li><li>Initial visibility boost for your content</li><li>Better engagement signals on your posts</li><li>Your profile starts getting noticed</li><li>Delivered within 5–7 days</li></ul><button class="pkg-btn" onclick="openModal('Instagram — Spark','$79')">Try this plan →</button><div class='pkg-why'><button class='pkg-why-btn' onclick='toggleWhy(this)'>Why $79? ↓</button><div class='pkg-why-body'>Platform access & seeding tools (40%) · Content targeting setup (30%) · Audience signal boosting (20%) · Campaign reporting (10%)</div></div></div>
+      <div class="pkg-c pop tilt-card"><div class="tilt-shine"></div><div class="pop-tag">Most popular</div><div class="pkg-tier">Ignite</div><div class="pkg-name">Start Getting Seen</div><div class="pkg-sub">For creators stuck with low reach</div><div class="pkg-pr"><sup>$</sup>199</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Strong visibility push for multiple reels</li><li>Your content reaches a larger audience</li><li>Higher engagement on your posts</li><li>Your profile starts building momentum</li><li>Delivered within 7–10 days</li></ul><button class="pkg-btn" onclick="openModal('Instagram — Ignite','$199')">Start this plan →</button><div class='pkg-why'><button class='pkg-why-btn' onclick='toggleWhy(this)'>Why $199? ↓</button><div class='pkg-why-body'>Extended platform reach (45%) · Multi-reel targeting (25%) · Engagement signal amplification (20%) · Priority reporting (10%)</div></div></div>
+      <div class="pkg-c tilt-card"><div class="tilt-shine"></div><div class="pkg-tier">Momentum</div><div class="pkg-name">Grow Steadily</div><div class="pkg-sub">For creators who want consistent growth</div><div class="pkg-pr"><sup>$</sup>399</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Continuous visibility for your content</li><li>Stronger engagement over time</li><li>Better audience targeting</li><li>Your profile starts growing more consistently</li><li>Delivered within 10–14 days</li></ul><button class="pkg-btn" onclick="openModal('Instagram — Momentum','$399')">Start this plan →</button><div class='pkg-why'><button class='pkg-why-btn' onclick='toggleWhy(this)'>Why $399? ↓</button><div class='pkg-why-body'>Full-scale distribution network (45%) · Ongoing content seeding (30%) · Audience retention signals (15%) · Detailed wrap report (10%)</div></div></div>
+      <div class="pkg-c tilt-card"><div class="tilt-shine"></div><div class="pkg-tier">Influence</div><div class="pkg-name">Become a Creator</div><div class="pkg-sub">For creators serious about building a strong presence</div><div class="pkg-pr"><sup>$</sup>799</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Long-term visibility support</li><li>Strong reach and engagement growth</li><li>Profile positioning improvement</li><li>Clear content direction</li><li>Personal growth guidance</li><li>Delivered within 14–21 days</li></ul><button class="pkg-btn" onclick="openModal('Instagram — Influence','$799')">Start this plan →</button><div class='pkg-why'><button class='pkg-why-btn' onclick='toggleWhy(this)'>Why $799? ↓</button><div class='pkg-why-body'>Premium distribution access (40%) · Long-horizon content strategy (25%) · Niche audience targeting (20%) · Personal guidance + reporting (15%)</div></div></div>
+      <div class="pkg-c tilt-card"><div class="tilt-shine"></div><div class="pkg-tier">Icon</div><div class="pkg-name">Authority</div><div class="pkg-sub">For creators building a media brand</div><div class="pkg-pr"><sup>$</sup>1,499</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Full-scale promotion system</li><li>Complete profile + content overhaul</li><li>90-day content strategy</li><li>2× 1-on-1 strategy calls</li><li>Brand deal + collab outreach</li><li>Priority support</li></ul><button class="pkg-btn" onclick="openModal('Instagram — Icon','$1,499')">Start this plan →</button><div class='pkg-why'><button class='pkg-why-btn' onclick='toggleWhy(this)'>Why $1,499? ↓</button><div class='pkg-why-body'>Full-scale promo system (35%) · 90-day strategy development (25%) · Brand deal outreach (20%) · 2× calls + priority support (20%)</div></div></div>
     </div>
 
-    <div id="yt-pkg" class="pkg-grid" style="display:none">
-      <div class="pkg-c"><div class="pkg-tier">YT Spark</div><div class="pkg-name">Foundation</div><div class="pkg-sub">You've started YouTube… but your videos are not getting views</div><div class="pkg-pr"><sup>$</sup>399</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Initial visibility for your videos</li><li>More reach to your content</li><li>Better watch-time signals</li><li>Your channel starts getting attention</li><li>Delivered within 14 days</li></ul><button class="pkg-btn" onclick="openModal('YouTube — Foundation','$399')">Start this plan →</button></div>
-      <div class="pkg-c pop"><div class="pop-tag">Most popular</div><div class="pkg-tier">YT Momentum</div><div class="pkg-name">Start Growing</div><div class="pkg-sub">You're uploading videos but not seeing growth</div><div class="pkg-pr"><sup>$</sup>799</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Strong push for your videos</li><li>Better audience reach</li><li>Improved engagement signals</li><li>Your channel starts growing</li><li>Delivered within 21 days</li></ul><button class="pkg-btn" onclick="openModal('YouTube — Accelerate','$799')">Start this plan →</button></div>
-      <div class="pkg-c"><div class="pkg-tier">YT Authority</div><div class="pkg-name">Scale Your Channel</div><div class="pkg-sub">You want to build a serious YouTube presence</div><div class="pkg-pr"><sup>$</sup>1,299</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Long-term growth support</li><li>Strong audience building</li><li>Better reach and retention</li><li>Clear growth direction</li><li>Delivered within 30 days</li></ul><button class="pkg-btn" onclick="openModal('YouTube — Scale','$1,299')">Start this plan →</button></div>
+    <div id="yt-pkg" class="pkg-grid yt-pkg" style="display:none">
+      <div class="pkg-c tilt-card"><div class="tilt-shine"></div><div class="pkg-tier">YT Spark</div><div class="pkg-name">Foundation</div><div class="pkg-sub">You've started YouTube… but your videos are not getting views</div><div class="pkg-pr"><sup>$</sup>399</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Initial visibility for your videos</li><li>More reach to your content</li><li>Better watch-time signals</li><li>Your channel starts getting attention</li><li>Delivered within 14 days</li></ul><button class="pkg-btn" onclick="openModal('YouTube — Foundation','$399')">Start this plan →</button></div>
+      <div class="pkg-c pop tilt-card"><div class="tilt-shine"></div><div class="pop-tag">Most popular</div><div class="pkg-tier">YT Momentum</div><div class="pkg-name">Start Growing</div><div class="pkg-sub">You're uploading videos but not seeing growth</div><div class="pkg-pr"><sup>$</sup>799</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Strong push for your videos</li><li>Better audience reach</li><li>Improved engagement signals</li><li>Your channel starts growing</li><li>Delivered within 21 days</li></ul><button class="pkg-btn" onclick="openModal('YouTube — Accelerate','$799')">Start this plan →</button></div>
+      <div class="pkg-c tilt-card"><div class="tilt-shine"></div><div class="pkg-tier">YT Authority</div><div class="pkg-name">Scale Your Channel</div><div class="pkg-sub">You want to build a serious YouTube presence</div><div class="pkg-pr"><sup>$</sup>1,299</div><div class="pkg-was">&nbsp;</div><ul class="pkg-feats"><li>Long-term growth support</li><li>Strong audience building</li><li>Better reach and retention</li><li>Clear growth direction</li><li>Delivered within 30 days</li></ul><button class="pkg-btn" onclick="openModal('YouTube — Scale','$1,299')">Start this plan →</button></div>
     </div>
     <p class="pkg-disc">* Results depend on content quality, posting consistency, niche, and platform behavior. We do not guarantee specific follower counts, view numbers, or engagement rates.</p>
     <div style="display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)">
@@ -2869,13 +3252,15 @@ footer::before{
         <div class="sf-slider-wrap" style="flex:1;min-width:120px">
           <div class="sf-track"></div>
           <div class="sf-fill" id="ff1"></div>
-          <input type="range" min="100" max="50000" value="1000" step="100" id="fs" oninput="updateSim()"/>
+          <input type="range" min="100" max="50000" value="1000" step="100" id="fs" oninput="updateSim()" style="touch-action:pan-x"/>
         </div>
         <div class="sim-fol-val"><span id="fv">1,000</span><span class="sim-fol-unit">followers</span></div>
       </div>
 
       <!-- Comparison table — rendered by JS -->
-      <div class="sim-table" id="sim-table"></div>
+      <div class="sim-table-wrap">
+        <div class="sim-table" id="sim-table"></div>
+      </div>
 
       <p class="sim-disclaimer">* Estimates based on typical campaign performance. Actual results vary by content quality, niche, and posting consistency.</p>
     </div>
@@ -2883,85 +3268,49 @@ footer::before{
   </div>
 </section>
 
-<!-- ══ AFTER ══ -->
+<!-- ══ AFTER YOU PAY ══ -->
 <section class="sec sec-white" id="after">
   <div class="wrap">
     <div class="sec-header rv">
       <div>
         <div class="sec-label">After you pay</div>
         <h2 class="h2">Here's exactly <em>what happens</em></h2>
-        <p style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink30);margin-top:12px">4 steps · No surprises · Full transparency</p>
       </div>
+      <p class="body-t">Simple, transparent, no surprises — from payment to results in 4 steps.</p>
     </div>
-    <div class="after-timeline">
-
-      <!-- Step 01 -->
-      <div class="at-step">
-        <div class="at-num-col">
-          <div class="at-badge">01</div>
-        </div>
-        <div class="at-content">
-          <div class="at-ico-wrap">🔒</div>
-          <div class="at-text">
-            <div class="at-tag">Payment</div>
-            <div class="at-title">Secure checkout via Stripe</div>
-            <p class="at-body">Pay safely through Stripe — the world's most trusted payment platform. A confirmation email with your onboarding link lands in your inbox immediately.</p>
-            <span class="at-pill">Instant confirmation</span>
-          </div>
-        </div>
+    <div class="after-pills">
+      <div class="after-pill">
+        <div class="ap-num">01</div>
+        <div class="ap-ico">🔒</div>
+        <div class="ap-title">Secure checkout via Stripe</div>
+        <div class="ap-body">Pay safely. Confirmation email + onboarding link arrives instantly.</div>
+        <span class="ap-tag">Instant confirmation</span>
       </div>
-
-      <!-- Step 02 — dark -->
-      <div class="at-step at-dark">
-        <div class="at-num-col">
-          <div class="at-badge">02</div>
-        </div>
-        <div class="at-content">
-          <div class="at-ico-wrap">📋</div>
-          <div class="at-text">
-            <div class="at-tag">Onboarding</div>
-            <div class="at-title">Complete a short brief</div>
-            <p class="at-body">A focused 3–5 minute form about your content, niche, and goals. We never ask for your password — your account security is completely non-negotiable.</p>
-            <span class="at-pill">No passwords. Ever.</span>
-          </div>
-        </div>
+      <div class="after-pill">
+        <div class="ap-num">02</div>
+        <div class="ap-ico">📋</div>
+        <div class="ap-title">Complete a short brief</div>
+        <div class="ap-body">3–5 minute form about your content and goals. No passwords. Ever.</div>
+        <span class="ap-tag">No passwords. Ever.</span>
       </div>
-
-      <!-- Step 03 -->
-      <div class="at-step">
-        <div class="at-num-col">
-          <div class="at-badge">03</div>
-        </div>
-        <div class="at-content">
-          <div class="at-ico-wrap">🚀</div>
-          <div class="at-text">
-            <div class="at-tag">Activation</div>
-            <div class="at-title">Your campaign launches</div>
-            <p class="at-body">We get to work within 24–72 hours of receiving your brief. Early signals in reach and visibility often appear within the first few days — you keep creating, we amplify.</p>
-            <span class="at-pill">Starts in 24–72h</span>
-          </div>
-        </div>
+      <div class="after-pill after-pill-dark">
+        <div class="ap-num">03</div>
+        <div class="ap-ico">🚀</div>
+        <div class="ap-title">Your campaign launches</div>
+        <div class="ap-body">We get to work within 24–72 hours. Early signals appear within days.</div>
+        <span class="ap-tag">Starts in 24–72h</span>
       </div>
-
-      <!-- Step 04 — dark -->
-      <div class="at-step at-dark">
-        <div class="at-num-col">
-          <div class="at-badge">04</div>
-        </div>
-        <div class="at-content">
-          <div class="at-ico-wrap">📊</div>
-          <div class="at-text">
-            <div class="at-tag">Completion</div>
-            <div class="at-title">Full summary delivered</div>
-            <p class="at-body">When your package completes, we send a detailed wrap-up covering everything done and concrete next steps to maintain momentum independently — yours to keep.</p>
-            <span class="at-pill">Full report included</span>
-          </div>
-        </div>
+      <div class="after-pill after-pill-dark">
+        <div class="ap-num">04</div>
+        <div class="ap-ico">📊</div>
+        <div class="ap-title">Full summary delivered</div>
+        <div class="ap-body">Detailed wrap-up with everything done and next steps — yours to keep.</div>
+        <span class="ap-tag">Full report included</span>
       </div>
-
     </div>
   </div>
 </section>
+
 
 <!-- ══ AUDIT ══ -->
 <section class="sec" id="audit" style="padding:0;border-bottom:1px solid var(--line)">
@@ -3014,6 +3363,8 @@ footer::before{
   </div>
 </section>
 
+
+
 <!-- ══ ABOUT ══ -->
 <section id="about" style="position:relative;overflow:hidden">
   <!-- botanical corner cluster -->
@@ -3065,20 +3416,20 @@ footer::before{
         <div class="about-r-label">What we stand for</div>
         <div class="about-stats">
           <div class="about-stat">
-            <div class="as-v">Safe</div>
-            <div class="as-l">No password access</div>
+            <div class="as-v"><span class="count-up" data-target="8">0</span></div>
+            <div class="as-l">Packages available</div>
           </div>
           <div class="about-stat">
-            <div class="as-v">Real</div>
-            <div class="as-l">Strategy-based</div>
+            <div class="as-v"><span class="count-up" data-target="72" data-suffix="h">0</span></div>
+            <div class="as-l">Max campaign start time</div>
           </div>
           <div class="about-stat">
-            <div class="as-v">24–72h</div>
-            <div class="as-l">Campaign start time</div>
+            <div class="as-v"><span class="count-up" data-target="2">0</span></div>
+            <div class="as-l">Platforms supported</div>
           </div>
           <div class="about-stat">
-            <div class="as-v">IG + YT</div>
-            <div class="as-l">Both platforms</div>
+            <div class="as-v"><span class="count-up" data-target="100" data-suffix="%">0</span></div>
+            <div class="as-l">No-password guarantee</div>
           </div>
         </div>
         <div class="about-bottom">
@@ -3087,6 +3438,52 @@ footer::before{
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ WHAT WE DON'T DO ══ -->
+<section class="sec sec-white" id="honest">
+  <div class="wrap">
+    <div class="sec-header rv">
+      <div>
+        <div class="sec-label" style="color:var(--stem)">Radical transparency</div>
+        <h2 class="h2">What we <em>don't</em> do.</h2>
+      </div>
+      <p class="body-t">We'd rather lose a sale than overpromise. Here's exactly what you won't get from Inflorax.</p>
+    </div>
+    <div class="dont-grid rv" style="transition-delay:.08s">
+      <div class="dont-card">
+        <div class="dont-x">✕</div>
+        <div class="dont-title">We don't buy followers</div>
+        <div class="dont-body">Every number you gain comes from real visibility and real interest. No bots, no fake accounts, no inflated vanity metrics that disappear next week.</div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-x">✕</div>
+        <div class="dont-title">We don't promise viral</div>
+        <div class="dont-body">Anyone who guarantees a viral video is lying to you. We promise a real, strategic push — results depend on your content, niche, and consistency.</div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-x">✕</div>
+        <div class="dont-title">We don't need your password</div>
+        <div class="dont-body">Never. Not your Instagram login, not your YouTube credentials, not any account access. We work externally — your account security is never at risk.</div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-x">✕</div>
+        <div class="dont-title">We don't lock you in</div>
+        <div class="dont-body">No subscriptions, no retainers, no 3-month commitments. Pay per campaign. If it works, come back. If it doesn't fit, you're free to walk away.</div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-x">✕</div>
+        <div class="dont-title">We don't hide the numbers</div>
+        <div class="dont-body">Every package shows you estimated results upfront. Use our simulator to see what's realistic for your account before you spend a single dollar.</div>
+      </div>
+      <div class="dont-card">
+        <div class="dont-x">✕</div>
+        <div class="dont-title">We don't disappear after payment</div>
+        <div class="dont-body">You get a full campaign summary at the end — what was done, what moved, and what to do next. Transparent from start to finish.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -3114,7 +3511,7 @@ footer::before{
       <div class="faq-lc">
         <p class="body-t" style="font-size:14px">Six of the most common questions we receive from creators before starting their first campaign with Inflorax.</p>
         <div style="margin-top:28px">
-          <button class="btn-d btn-blue" onclick="go('packages')" style="width:100%;justify-content:center">View packages →</button>
+          <button class="btn-d btn-blue btn-magnetic" onclick="go('packages')" style="width:100%;justify-content:center">View packages →</button>
         </div>
       </div>
       <div class="faq-list">
@@ -3151,7 +3548,7 @@ footer::before{
     <h2 class="cta-h2 rv" style="transition-delay:.06s">This is where your content<br>starts getting <em>seen.</em></h2>
     <p class="cta-sub rv" style="transition-delay:.12s">If you've been stuck and waiting for things to change — this is your next step.</p>
     <div class="cta-btns rv" style="transition-delay:.18s">
-      <button class="btn-d btn-blue" onclick="go('packages')">View packages →</button>
+      <button class="btn-d btn-blue btn-magnetic" onclick="go('packages')">View packages →</button>
       <button class="btn-o" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" onmouseover="this.style.background='var(--white)';this.style.color='var(--ink)'" onmouseout="this.style.background='transparent';this.style.color='rgba(255,255,255,0.6)'" onclick="openAudit()">Get free audit</button>
     </div>
     <div class="cta-trust rv" style="transition-delay:.24s">No passwords required · Secure checkout via Stripe · Results depend on your content and consistency</div>
@@ -3214,11 +3611,13 @@ footer::before{
 <div class="modal-ov" id="modal" onclick="closeModal(event)">
   <div class="modal-box">
     <button class="mc" onclick="closeModal(null)">×</button>
-    <div class="mb-pkg" id="m-pkg">—</div>
-    <div class="mb-h">Complete your purchase</div>
-    <div class="mb-sub">Pay securely through Stripe. A confirmation email with your onboarding link arrives instantly. No passwords required — ever.</div>
-    <button class="mb-btn" onclick="doCheckout()">Proceed to secure checkout →</button>
-    <div class="mb-trust"><span>🔒 Stripe secured</span><span>✓ No passwords</span><span>⚡ 24–72h start</span></div>
+    <div class="mb-plan-pill" id="m-pkg">—</div>
+    <div class="mb-body-pad">
+      <div class="mb-h">Complete your purchase</div>
+      <div class="mb-sub">Pay securely through Stripe. A confirmation email with your onboarding link arrives instantly. No passwords required — ever.</div>
+      <button class="mb-btn btn-magnetic" onclick="doCheckout()">Proceed to secure checkout →</button>
+      <div class="mb-trust"><span>🔒 Stripe secured</span><span>✓ No passwords</span><span>⚡ 24–72h start</span></div>
+    </div>
   </div>
 </div>
 
@@ -3377,6 +3776,136 @@ footer::before{
 
 /* badge counter disabled — no fake stats */
 
+
+
+/* ════ PRELOADER STARFIELD ════ */
+(function(){
+  var canvas = document.getElementById('intro-stars');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var stars = [], shootingStars = [], animId;
+  var W, H;
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+
+  /* Generate stars */
+  function makeStars(){
+    stars = [];
+    var count = Math.floor((W * H) / 3000);
+    for(var i = 0; i < count; i++){
+      var size = Math.random();
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: size < .6 ? .4 : size < .85 ? .8 : 1.3,  /* small / med / large */
+        baseAlpha: .15 + Math.random() * .55,
+        alpha: 0,
+        twinkleSpeed: .004 + Math.random() * .012,
+        twinkleOffset: Math.random() * Math.PI * 2,
+        green: Math.random() < .15,  /* 15% are green-tinted */
+      });
+    }
+  }
+
+  /* Shoot a star */
+  function shootStar(){
+    var edge = Math.random() < .5;
+    shootingStars.push({
+      x: edge ? Math.random() * W * .6 : 0,
+      y: edge ? 0 : Math.random() * H * .4,
+      vx: 3 + Math.random() * 5,
+      vy: 2 + Math.random() * 4,
+      len: 80 + Math.random() * 120,
+      alpha: 1,
+      fade: .022 + Math.random() * .018,
+    });
+  }
+
+  var t = 0;
+  function draw(){
+    if(!document.getElementById('intro') || document.getElementById('intro').classList.contains('gone')){
+      cancelAnimationFrame(animId); return;
+    }
+    ctx.clearRect(0, 0, W, H);
+    t += .016;
+
+    /* Draw stars */
+    stars.forEach(function(s){
+      var tw = s.baseAlpha * (.6 + .4 * Math.sin(t * s.twinkleSpeed * 60 + s.twinkleOffset));
+      /* Occasional shimmer burst */
+      if(Math.sin(t * s.twinkleSpeed * 30 + s.twinkleOffset) > .95) tw = Math.min(1, tw * 2.2);
+      ctx.globalAlpha = tw;
+      ctx.beginPath();
+      if(s.r > 1.1){
+        /* Large stars: 4-point shimmer cross */
+        ctx.save();
+        ctx.translate(s.x, s.y);
+        var grd = ctx.createRadialGradient(0,0,0,0,0,s.r*3.5);
+        grd.addColorStop(0, s.green ? 'rgba(80,200,95,1)' : 'rgba(255,255,255,1)');
+        grd.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = grd;
+        ctx.fillRect(-s.r*3.5, -s.r*3.5, s.r*7, s.r*7);
+        /* Cross rays */
+        ctx.globalAlpha = tw * .5;
+        ctx.strokeStyle = s.green ? 'rgba(80,200,95,.8)' : 'rgba(255,255,255,.6)';
+        ctx.lineWidth = .5;
+        ctx.beginPath();
+        ctx.moveTo(-s.r*6,0); ctx.lineTo(s.r*6,0);
+        ctx.moveTo(0,-s.r*6); ctx.lineTo(0,s.r*6);
+        ctx.stroke();
+        ctx.restore();
+      } else {
+        /* Small/med stars: simple glow circle */
+        var g = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*4);
+        g.addColorStop(0, s.green ? 'rgba(80,200,95,1)' : 'rgba(255,255,255,1)');
+        g.addColorStop(.4, s.green ? 'rgba(45,122,58,.3)' : 'rgba(200,230,200,.2)');
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.arc(s.x, s.y, s.r*4, 0, Math.PI*2);
+        ctx.fill();
+      }
+    });
+
+    /* Shooting stars */
+    ctx.globalAlpha = 1;
+    for(var i = shootingStars.length-1; i >= 0; i--){
+      var ss = shootingStars[i];
+      ctx.globalAlpha = ss.alpha * .7;
+      var grad = ctx.createLinearGradient(ss.x-ss.vx*ss.len/8, ss.y-ss.vy*ss.len/8, ss.x, ss.y);
+      grad.addColorStop(0, 'rgba(80,200,95,0)');
+      grad.addColorStop(.7, 'rgba(80,200,95,.3)');
+      grad.addColorStop(1, 'rgba(255,255,255,.9)');
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(ss.x - ss.vx*(ss.len/8), ss.y - ss.vy*(ss.len/8));
+      ctx.lineTo(ss.x, ss.y);
+      ctx.stroke();
+      ss.x += ss.vx; ss.y += ss.vy; ss.alpha -= ss.fade;
+      if(ss.alpha <= 0 || ss.x > W || ss.y > H) shootingStars.splice(i,1);
+    }
+    ctx.globalAlpha = 1;
+    animId = requestAnimationFrame(draw);
+  }
+
+  makeStars();
+  draw();
+  /* Shoot stars periodically */
+  var shootInterval = setInterval(function(){
+    if(document.getElementById('intro') && !document.getElementById('intro').classList.contains('gone')){
+      shootStar();
+      if(Math.random() < .3) setTimeout(shootStar, 180); /* occasional double */
+    } else {
+      clearInterval(shootInterval);
+    }
+  }, 900);
+
+  window.addEventListener('resize', function(){ resize(); makeStars(); });
+})();
 
 /* ════ PRELOADER ════ */
 (function(){
@@ -3562,15 +4091,15 @@ function setPlat(p,btn){
   var currentPlat = 'ig';
   var platforms = {
     ig: { plans: [
-      {id:0, tier:'Spark',     name:'Getting Started',    price:'$79',    days:'5–7 days',   best:'New creators with low views',         modal:'Instagram — Spark',    cta:'Try this plan',   fMult:0.04, rMult:1.8,  pop:false},
-      {id:1, tier:'Ignite',    name:'Start Getting Seen', price:'$199',   days:'7–10 days',  best:'Creators stuck with low reach',        modal:'Instagram — Ignite',   cta:'Start this plan', fMult:0.10, rMult:3.2,  pop:true},
-      {id:2, tier:'Momentum',  name:'Grow Steadily',      price:'$399',   days:'10–14 days', best:'Creators wanting consistent growth',   modal:'Instagram — Momentum', cta:'Start this plan', fMult:0.18, rMult:5.8,  pop:false},
-      {id:3, tier:'Influence', name:'Become a Creator',   price:'$799',   days:'14–21 days', best:'Serious about building a presence',    modal:'Instagram — Influence',cta:'Start this plan', fMult:0.30, rMult:9.5,  pop:false},
+      {id:0, tier:'Spark',     name:'Getting Started',    price:'$79',    days:'5–7 days',   best:'New creators with low views',         modal:'Instagram — Spark',    cta:'Try this plan',   fMult:0.012, rMult:0.6,  pop:false},
+      {id:1, tier:'Ignite',    name:'Start Getting Seen', price:'$199',   days:'7–10 days',  best:'Creators stuck with low reach',        modal:'Instagram — Ignite',   cta:'Start this plan', fMult:0.028, rMult:1.4,  pop:true},
+      {id:2, tier:'Momentum',  name:'Grow Steadily',      price:'$399',   days:'10–14 days', best:'Creators wanting consistent growth',   modal:'Instagram — Momentum', cta:'Start this plan', fMult:0.055, rMult:2.8,  pop:false},
+      {id:3, tier:'Influence', name:'Become a Creator',   price:'$799',   days:'14–21 days', best:'Serious about building a presence',    modal:'Instagram — Influence',cta:'Start this plan', fMult:0.095, rMult:4.8,  pop:false},
     ]},
     yt: { plans: [
-      {id:0, tier:'Foundation',     name:'Foundation',        price:'$399',   days:'14 days',  best:'New YouTube creators',                 modal:'YouTube — Foundation', cta:'Start this plan', fMult:0.03, rMult:2.2, pop:false},
-      {id:1, tier:'Start Growing',  name:'Start Growing',     price:'$799',   days:'21 days',  best:'Creators stuck on low views',           modal:'YouTube — Accelerate', cta:'Start this plan', fMult:0.08, rMult:4.8, pop:true},
-      {id:2, tier:'Scale Channel',  name:'Scale Your Channel',price:'$1,299', days:'30 days',  best:'Serious about YouTube growth',          modal:'YouTube — Scale',      cta:'Start this plan', fMult:0.15, rMult:8.5, pop:false},
+      {id:0, tier:'Foundation',     name:'Foundation',        price:'$399',   days:'14 days',  best:'New YouTube creators',                 modal:'YouTube — Foundation', cta:'Start this plan', fMult:0.010, rMult:0.5, pop:false},
+      {id:1, tier:'Start Growing',  name:'Start Growing',     price:'$799',   days:'21 days',  best:'Creators stuck on low views',           modal:'YouTube — Accelerate', cta:'Start this plan', fMult:0.025, rMult:1.2, pop:true},
+      {id:2, tier:'Scale Channel',  name:'Scale Your Channel',price:'$1,299', days:'30 days',  best:'Serious about YouTube growth',          modal:'YouTube — Scale',      cta:'Start this plan', fMult:0.048, rMult:2.4, pop:false},
     ]}
   };
 
@@ -3593,6 +4122,13 @@ function setPlat(p,btn){
     });
   }
 
+  /* ── Detect mobile ── */
+  function isMobile(){ return window.innerWidth <= 768; }
+
+  /* ── Format number ── */
+  /* (fmt already defined above) */
+
+  /* ══ DESKTOP TABLE ══ */
   function buildTable(plans){
     var cols = plans.length;
     var gc = '160px repeat('+cols+',1fr)';
@@ -3644,18 +4180,117 @@ function setPlat(p,btn){
     document.getElementById('sim-table').innerHTML = t;
   }
 
+  /* ══ MOBILE CAROUSEL ══ */
+  window.carouselIdx = 0;
+
+  function buildCarousel(plans){
+    window.carouselIdx = plans.findIndex(function(p){ return p.pop; });
+    if(window.carouselIdx < 0) window.carouselIdx = 0;
+
+    var t = '<div class="sim-carousel">';
+
+    /* Cards strip */
+    t += '<div class="sim-cards" id="sim-cards">';
+    plans.forEach(function(p, i){
+      var isActive = i === window.carouselIdx;
+      t += '<div class="sim-card'+(p.pop?' sim-card-pop':'')+(isActive?' sim-card-active':'')+'" data-idx="'+i+'">';
+      if(p.pop) t += '<div class="smc-badge">Most Popular</div>';
+      t += '<div class="smc-tier">'+p.tier+'</div>';
+      t += '<div class="smc-name">'+p.name+'</div>';
+      t += '<div class="smc-price">'+p.price+'</div>';
+      t += '<div class="smc-days">'+p.days+'</div>';
+      t += '<div class="smc-divider"></div>';
+      t += '<div class="smc-stat-label">Est. new followers</div>';
+      t += '<div class="smc-num" id="sp-f'+p.id+'">—</div>';
+      t += '<div class="sc-bar-wrap" style="margin-bottom:16px"><div class="sc-bar'+(p.pop?' sc-bar-pop':'')+'" id="sp-b'+p.id+'"></div></div>';
+      t += '<div class="smc-stat-label">Est. reach</div>';
+      t += '<div class="smc-reach'+(p.pop?' sc-reach-pop':'')+'" id="sp-r'+p.id+'">—</div>';
+      t += '<div class="smc-divider"></div>';
+      t += '<div class="smc-best">'+p.best+'</div>';
+      t += '<button class="sc-cta'+(p.pop?' sc-cta-pop':'')+'" onclick="openModal(\''+p.modal+'\',\''+p.price+'\')">'+p.cta+' \u2192</button>';
+      t += '</div>';
+    });
+    t += '</div>'; /* /sim-cards */
+
+    /* Dots */
+    t += '<div class="sim-dots" id="sim-dots">';
+    plans.forEach(function(p, i){
+      t += '<button class="sim-dot'+(i===window.carouselIdx?' sim-dot-on':'')+'" onclick="simGoCard('+i+')" aria-label="Plan '+(i+1)+'"></button>';
+    });
+    t += '</div>';
+
+    /* Prev / Next arrows */
+    t += '<div class="sim-arrows">';
+    t += '<button class="sim-arrow" id="sim-prev" onclick="simGoCard(window.carouselIdx-1)">←</button>';
+    t += '<div class="sim-arrow-label" id="sim-plan-label">'+plans[window.carouselIdx].name+'</div>';
+    t += '<button class="sim-arrow" id="sim-next" onclick="simGoCard(window.carouselIdx+1)">→</button>';
+    t += '</div>';
+
+    t += '</div>'; /* /sim-carousel */
+
+    document.getElementById('sim-table').innerHTML = t;
+    initCarouselSwipe(plans);
+  }
+
+  window.simGoCard = function(idx){
+    var plans = platforms[currentPlat].plans;
+    window.carouselIdx = ((idx % plans.length) + plans.length) % plans.length;
+    /* Animate cards */
+    var cards = document.querySelectorAll('.sim-card');
+    cards.forEach(function(card, i){
+      card.classList.toggle('sim-card-active', i === window.carouselIdx);
+    });
+    /* Update dots */
+    document.querySelectorAll('.sim-dot').forEach(function(d,i){
+      d.classList.toggle('sim-dot-on', i === window.carouselIdx);
+    });
+    /* Update label */
+    var lbl = document.getElementById('sim-plan-label');
+    if(lbl) lbl.textContent = plans[window.carouselIdx].name;
+    /* Update arrows */
+    var prev = document.getElementById('sim-prev');
+    var next = document.getElementById('sim-next');
+    if(prev) prev.style.opacity = window.carouselIdx === 0 ? '.35' : '1';
+    if(next) next.style.opacity = window.carouselIdx === plans.length-1 ? '.35' : '1';
+  };
+
+  function initCarouselSwipe(plans){
+    var el = document.getElementById('sim-cards');
+    if(!el) return;
+    var startX = 0, moved = false;
+    el.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; moved=false; },{passive:true});
+    el.addEventListener('touchmove', function(e){ moved = Math.abs(e.touches[0].clientX - startX) > 8; },{passive:true});
+    el.addEventListener('touchend', function(e){
+      if(!moved) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if(dx < -40) simGoCard(window.carouselIdx+1);
+      else if(dx > 40) simGoCard(window.carouselIdx-1);
+    });
+    /* Init arrow state */
+    setTimeout(function(){ simGoCard(window.carouselIdx); }, 50);
+  }
+
+  /* ══ UNIFIED BUILD — picks mode based on screen ══ */
+  function buildSim(plans){
+    if(isMobile()){
+      buildCarousel(plans);
+    } else {
+      buildTable(plans);
+    }
+  }
+
   window.simSetPlat = function(plat){
     currentPlat = plat;
+    window.carouselIdx = 0;
     document.getElementById('sim-btn-ig').classList.toggle('sim-plat-on', plat==='ig');
     document.getElementById('sim-btn-yt').classList.toggle('sim-plat-on', plat==='yt');
-    /* Animate table out/in */
     var tbl = document.getElementById('sim-table');
-    tbl.style.opacity='0';tbl.style.transform='translateY(8px)';
+    tbl.style.opacity='0'; tbl.style.transform='translateY(8px)';
     setTimeout(function(){
-      buildTable(platforms[plat].plans);
+      buildSim(platforms[plat].plans);
       window.updateSim();
       tbl.style.transition='opacity .3s,transform .3s';
-      tbl.style.opacity='1';tbl.style.transform='none';
+      tbl.style.opacity='1'; tbl.style.transform='none';
     },160);
   };
 
@@ -3678,12 +4313,22 @@ function setPlat(p,btn){
     });
   };
 
-  buildTable(platforms.ig.plans);
-  setTimeout(window.updateSim,300);
-  /* Also re-init on DOMContentLoaded as safety net */
+  /* Re-build on resize crossing 768px boundary */
+  var _lastMob = isMobile();
+  window.addEventListener('resize', function(){
+    var mob = isMobile();
+    if(mob !== _lastMob){
+      _lastMob = mob;
+      buildSim(platforms[currentPlat].plans);
+      window.updateSim();
+    }
+  });
+
+  buildSim(platforms.ig.plans);
+  setTimeout(window.updateSim, 300);
   if(document.readyState === 'loading'){
     document.addEventListener('DOMContentLoaded', function(){
-      buildTable(platforms.ig.plans);
+      buildSim(platforms.ig.plans);
       setTimeout(window.updateSim, 100);
     });
   }
@@ -3714,26 +4359,63 @@ function doCheckout(){
 function closeModal(e){if(e&&e.target!==document.getElementById('modal'))return;document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal(null);});
 
-/* ════ RIPPLE ════ */
-var rs=document.createElement('style');rs.textContent='@keyframes rpl{to{transform:scale(4);opacity:0}}';document.head.appendChild(rs);
-document.addEventListener('click',function(e){
-  var btn=e.target.closest('.btn-d,.btn-o,.pkg-btn,.nav-contact,.float-cta,.f-sub,.mb-btn,.nav-cta-btn');
-  if(!btn)return;
-  var r=document.createElement('span'),rect=btn.getBoundingClientRect(),sz=Math.max(rect.width,rect.height);
-  r.style.cssText='position:absolute;border-radius:50%;background:rgba(255,255,255,.25);width:'+sz+'px;height:'+sz+'px;left:'+(e.clientX-rect.left-sz/2)+'px;top:'+(e.clientY-rect.top-sz/2)+'px;transform:scale(0);animation:rpl .55s linear;pointer-events:none;z-index:0';
-  btn.style.position='relative';btn.style.overflow='hidden';btn.appendChild(r);setTimeout(function(){r.remove();},560);
-});
+/* ════ RIPPLE + 3D TILT ════ */
+(function(){
+  /* Ripple on buttons */
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest('.btn-d,.btn-o,.pkg-btn,.nav-contact,.float-cta,.mb-btn,.nav-cta-btn,.sc-cta,.sp-cta,.after-pill');
+    if(!btn)return;
+    var r=document.createElement('span'),rect=btn.getBoundingClientRect(),sz=Math.max(rect.width,rect.height)*2;
+    r.style.cssText='position:absolute;border-radius:50%;background:rgba(255,255,255,.18);width:'+sz+'px;height:'+sz+'px;left:'+(e.clientX-rect.left-sz/2)+'px;top:'+(e.clientY-rect.top-sz/2)+'px;transform:scale(0);animation:rippleOut .65s ease-out forwards;pointer-events:none;z-index:99';
+    btn.style.position='relative';btn.style.overflow='hidden';
+    btn.appendChild(r);setTimeout(function(){r.remove();},700);
+  });
 
-/* ════ AUDIT MODAL ════ */
-var AM={cur:1,total:10,answers:{},opt:{9:true}};
-var rs=document.createElement('style');rs.textContent='@keyframes rpl{to{transform:scale(4);opacity:0}}';document.head.appendChild(rs);
-document.addEventListener('click',function(e){
-  var btn=e.target.closest('.btn-d,.btn-o,.pkg-btn,.nav-contact,.float-cta,.f-sub,.mb-btn,.nav-cta-btn');
-  if(!btn)return;
-  var r=document.createElement('span'),rect=btn.getBoundingClientRect(),sz=Math.max(rect.width,rect.height);
-  r.style.cssText='position:absolute;border-radius:50%;background:rgba(255,255,255,.25);width:'+sz+'px;height:'+sz+'px;left:'+(e.clientX-rect.left-sz/2)+'px;top:'+(e.clientY-rect.top-sz/2)+'px;transform:scale(0);animation:rpl .55s linear;pointer-events:none;z-index:0';
-  btn.style.position='relative';btn.style.overflow='hidden';btn.appendChild(r);setTimeout(function(){r.remove();},560);
-});
+  /* 3D tilt on .tilt-card elements */
+  function initTilt(){
+    document.querySelectorAll('.tilt-card').forEach(function(card){
+      var shine=card.querySelector('.tilt-shine');
+      card.addEventListener('mousemove',function(e){
+        var rect=card.getBoundingClientRect();
+        var x=(e.clientX-rect.left)/rect.width-.5;
+        var y=(e.clientY-rect.top)/rect.height-.5;
+        card.style.transform='perspective(800px) rotateY('+x*10+'deg) rotateX('+(-y*10)+'deg) scale(1.025)';
+        card.style.transition='transform .08s ease';
+        if(shine){
+          shine.style.background='radial-gradient(circle at '+(x*100+50)+'% '+(y*100+50)+'%, rgba(255,255,255,.13) 0%, transparent 65%)';
+          shine.style.opacity='1';
+        }
+      });
+      card.addEventListener('mouseleave',function(){
+        card.style.transform='perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)';
+        card.style.transition='transform .5s cubic-bezier(.16,1,.3,1)';
+        if(shine)shine.style.opacity='0';
+      });
+    });
+  }
+
+  /* Magnetic hover on primary buttons */
+  function initMagnetic(){
+    document.querySelectorAll('.btn-magnetic,.nav-contact,.float-cta').forEach(function(btn){
+      btn.addEventListener('mousemove',function(e){
+        var rect=btn.getBoundingClientRect();
+        var x=(e.clientX-rect.left-rect.width/2)*.2;
+        var y=(e.clientY-rect.top-rect.height/2)*.2;
+        btn.style.transform='translate('+x+'px,'+y+'px)';
+      });
+      btn.addEventListener('mouseleave',function(){
+        btn.style.transform='translate(0,0)';
+        btn.style.transition='transform .4s cubic-bezier(.16,1,.3,1)';
+      });
+    });
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',function(){initTilt();initMagnetic();});
+  } else {
+    initTilt();initMagnetic();
+  }
+})();
 
 /* ════ AUDIT MODAL ════ */
 var AM={cur:1,total:10,answers:{},opt:{9:true}};
@@ -4085,6 +4767,91 @@ function amSubmit(){
     });
   }
 })();
+
+/* ════ LIVE CAMPAIGN COUNTER ════ */
+(function(){
+  var el = document.getElementById('badge-live-num');
+  if(!el) return;
+  var base = 12;
+  /* Slowly drift up/down to feel real */
+  setInterval(function(){
+    var drift = Math.floor(Math.random()*3) - 1; /* -1, 0, or +1 */
+    base = Math.max(8, Math.min(24, base + drift));
+    el.textContent = base;
+  }, 7000);
+})();
+
+/* ════ SCROLL COUNT-UP ════ */
+(function(){
+  function animCount(el){
+    if(el.dataset.counted) return;
+    el.dataset.counted = '1';
+    var target = parseInt(el.dataset.target)||0;
+    var suffix = el.dataset.suffix||'';
+    var dur = 1400;
+    var start = null;
+    requestAnimationFrame(function step(ts){
+      if(!start) start=ts;
+      var p = Math.min((ts-start)/dur,1);
+      var ease = 1-Math.pow(1-p,3);
+      el.textContent = Math.round(target*ease) + suffix;
+      if(p<1) requestAnimationFrame(step);
+      else{ el.textContent = target+suffix; el.classList.add('counted'); }
+    });
+  }
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting) animCount(en.target);
+    });
+  },{threshold:.5});
+  document.querySelectorAll('.count-up').forEach(function(el){ obs.observe(el); });
+})();
+
+/* ════ PRICING TRANSPARENCY TOGGLE ════ */
+window.toggleWhy = function(btn){
+  var body = btn.nextElementSibling;
+  var open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  btn.classList.toggle('open', !open);
+  btn.textContent = (!open ? 'Hide breakdown ↑' : btn.dataset.label||'Why this price? ↓');
+};
+/* Set initial label */
+document.querySelectorAll('.pkg-why-btn').forEach(function(b){
+  b.dataset.label = b.textContent;
+});
+
+/* ════ LEAF MICRO-INTERACTIONS ════ */
+(function(){
+  document.querySelectorAll('.leaf-cluster').forEach(function(cluster){
+    /* Click → rustle animation */
+    cluster.addEventListener('click', function(){
+      cluster.classList.remove('rustling');
+      void cluster.offsetWidth; /* reflow to restart */
+      cluster.classList.add('rustling');
+      setTimeout(function(){ cluster.classList.remove('rustling'); }, 800);
+    });
+  });
+
+  /* Mouse parallax — leaves drift toward cursor */
+  document.addEventListener('mousemove', function(e){
+    var cx = (e.clientX/window.innerWidth - 0.5);
+    var cy = (e.clientY/window.innerHeight - 0.5);
+    var clusters = {
+      'lc-tl':  { x: cx*12,  y: cy*8  },
+      'lc-tr':  { x: cx*-10, y: cy*8  },
+      'lc-bl':  { x: cx*8,   y: cy*-10},
+      'lc-br':  { x: cx*-10, y: cy*-8 },
+    };
+    Object.keys(clusters).forEach(function(id){
+      var el = document.getElementById(id);
+      if(!el) return;
+      var d = clusters[id];
+      el.style.transform = 'translate('+d.x+'px,'+d.y+'px)';
+      el.style.transition = 'transform .8s cubic-bezier(.16,1,.3,1)';
+    });
+  });
+})();
+
 </script>
 
 </body>
