@@ -416,7 +416,7 @@ nav{
   border-radius:10px;
   padding:3px;
   flex-shrink:0;
-  position:relative;z-index:10;
+  position:relative;z-index:600;
   pointer-events:all;
   -webkit-user-select:none;
   user-select:none;
@@ -1350,7 +1350,7 @@ footer::before{
 }
 @media(max-width:768px){
   :root{--nav-h:56px}
-  body{padding-bottom:60px}
+  body{padding-bottom:80px}
   #cur,#cur-ring{display:none!important}
   nav{padding:0 16px;height:var(--nav-h)}
   .nav-links,.nav-meta,.nav-contact{display:none}
@@ -2833,6 +2833,29 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
   .logo-heart{background:var(--green)!important}
   .ham span{background:#fff!important}
 }
+
+/* ── KILL AUTOFILL NEAR SIMULATOR ── */
+#simulator input:-webkit-autofill,
+#simulator input:-webkit-autofill:focus{
+  transition:background-color 600000s 0s,color 600000s 0s!important;
+}
+#simulator{-webkit-user-modify:read-only}
+
+/* ── SIM TOGGLE ROW (separate from slider) ── */
+.sim-toggle-row{
+  padding:20px 28px 16px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-bottom:none;
+  display:flex;
+  align-items:center;
+  position:relative;
+  z-index:600;
+}
+@media(max-width:768px){
+  .sim-toggle-row{padding:16px}
+  .sim-plat-toggle{width:100%}
+}
 </style>
 </head>
 <body>
@@ -3542,7 +3565,7 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
 </section>
 
 <!-- ══ SIMULATOR ══ -->
-<section class="sec" id="simulator" autocomplete="off">
+<section class="sec" id="simulator">
   <canvas id="sim-canvas"></canvas>
   <div class="wrap">
     <div class="sec-header rv">
@@ -3556,14 +3579,19 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
     <!-- Unified comparison simulator -->
     <div class="sim-unified rv" style="transition-delay:.08s">
 
+      <!-- Autofill honeypot — hidden from users -->
+      <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none;height:0;overflow:hidden" aria-hidden="true">
+        <input type="text" name="username" tabindex="-1" autocomplete="username"/>
+        <input type="email" name="email" tabindex="-1" autocomplete="email"/>
+      </div>
       <!-- Platform toggle + slider row -->
       <div class="sim-slider-row">
         <!-- Platform toggle -->
         <div class="sim-plat-toggle">
-          <button class="sim-plat-btn sim-plat-on" id="sim-btn-ig" onclick="simSetPlat('ig')">
+          <button type="button" class="sim-plat-btn sim-plat-on" id="sim-btn-ig">
             <span class="sim-plat-icon">📸</span> Instagram
           </button>
-          <button class="sim-plat-btn" id="sim-btn-yt" onclick="simSetPlat('yt')">
+          <button type="button" class="sim-plat-btn" id="sim-btn-yt">
             <span class="sim-plat-icon">▶</span> YouTube
           </button>
         </div>
@@ -3571,10 +3599,10 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
         <div class="sim-slider-divider"></div>
         <!-- Slider -->
         <span class="sim-slider-label">Your current followers</span>
-        <div class="sf-slider-wrap" style="flex:1;min-width:120px">
+        <div class="sf-slider-wrap" style="flex:1;min-width:120px" role="presentation">
           <div class="sf-track"></div>
           <div class="sf-fill" id="ff1"></div>
-          <input type="range" min="100" max="50000" value="1000" step="100" id="fs" oninput="updateSim()" style="touch-action:pan-x" autocomplete="off"/>
+          <input type="range" min="100" max="50000" value="1000" step="100" id="fs" oninput="updateSim()" style="touch-action:pan-x" autocomplete="off" name="price-range" data-lpignore="true" data-form-type="other"/>
         </div>
         <div class="sim-fol-val"><span id="fv">1,000</span><span class="sim-fol-unit">followers</span></div>
       </div>
@@ -4606,7 +4634,6 @@ function setPlat(p,btn){
   }
 
   window.simSetPlat = function(plat){
-    if(plat === currentPlat) return;
     currentPlat = plat;
     window.carouselIdx = 0;
     /* Toggle active class */
@@ -4649,26 +4676,23 @@ function setPlat(p,btn){
     }
   });
 
+  function attachToggle(){
+    var igBtn = document.getElementById('sim-btn-ig');
+    var ytBtn = document.getElementById('sim-btn-yt');
+    if(igBtn){ igBtn.addEventListener('click', function(){ simSetPlat('ig'); }); }
+    if(ytBtn){ ytBtn.addEventListener('click', function(){ simSetPlat('yt'); }); }
+  }
+
   buildSim(platforms.ig.plans);
   setTimeout(window.updateSim, 300);
   if(document.readyState === 'loading'){
     document.addEventListener('DOMContentLoaded', function(){
       buildSim(platforms.ig.plans);
       setTimeout(window.updateSim, 100);
-      /* Attach toggle via JS — more reliable than inline onclick on mobile */
-      var igBtn = document.getElementById('sim-btn-ig');
-      var ytBtn = document.getElementById('sim-btn-yt');
-      if(igBtn) igBtn.addEventListener('click', function(){ simSetPlat('ig'); });
-      if(ytBtn) ytBtn.addEventListener('click', function(){ simSetPlat('yt'); });
+      attachToggle();
     });
   } else {
-    /* Already loaded — attach now */
-    setTimeout(function(){
-      var igBtn = document.getElementById('sim-btn-ig');
-      var ytBtn = document.getElementById('sim-btn-yt');
-      if(igBtn) igBtn.addEventListener('click', function(){ simSetPlat('ig'); });
-      if(ytBtn) ytBtn.addEventListener('click', function(){ simSetPlat('yt'); });
-    }, 100);
+    attachToggle();
   }
 })();
 
