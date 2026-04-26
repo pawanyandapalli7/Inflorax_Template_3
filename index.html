@@ -417,6 +417,9 @@ nav{
   padding:3px;
   flex-shrink:0;
   position:relative;z-index:10;
+  pointer-events:all;
+  -webkit-user-select:none;
+  user-select:none;
 }
 .sim-plat-btn{
   padding:9px 20px;
@@ -3571,7 +3574,7 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
         <div class="sf-slider-wrap" style="flex:1;min-width:120px">
           <div class="sf-track"></div>
           <div class="sf-fill" id="ff1"></div>
-          <input type="range" min="100" max="50000" value="1000" step="100" id="fs" oninput="updateSim()" style="touch-action:pan-x" autocomplete="off" name="followers-slider"/>
+          <input type="range" min="100" max="50000" value="1000" step="100" id="fs" oninput="updateSim()" style="touch-action:pan-x" autocomplete="off"/>
         </div>
         <div class="sim-fol-val"><span id="fv">1,000</span><span class="sim-fol-unit">followers</span></div>
       </div>
@@ -4442,7 +4445,11 @@ function setPlat(p,btn){
   }
 
   /* ── Detect mobile ── */
-  function isMobile(){ return window.innerWidth <= 768; }
+  function isMobile(){ 
+    return window.innerWidth <= 768 || 
+           (window.screen && window.screen.width <= 768) ||
+           /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+  }
 
   /* ── Format number ── */
   /* (fmt already defined above) */
@@ -4599,18 +4606,17 @@ function setPlat(p,btn){
   }
 
   window.simSetPlat = function(plat){
+    if(plat === currentPlat) return;
     currentPlat = plat;
     window.carouselIdx = 0;
-    document.getElementById('sim-btn-ig').classList.toggle('sim-plat-on', plat==='ig');
-    document.getElementById('sim-btn-yt').classList.toggle('sim-plat-on', plat==='yt');
-    var tbl = document.getElementById('sim-table');
-    tbl.style.opacity='0'; tbl.style.transform='translateY(8px)';
-    setTimeout(function(){
-      buildSim(platforms[plat].plans);
-      window.updateSim();
-      tbl.style.transition='opacity .3s,transform .3s';
-      tbl.style.opacity='1'; tbl.style.transform='none';
-    },160);
+    /* Toggle active class */
+    var igBtn = document.getElementById('sim-btn-ig');
+    var ytBtn = document.getElementById('sim-btn-yt');
+    if(igBtn) igBtn.className = 'sim-plat-btn' + (plat==='ig' ? ' sim-plat-on' : '');
+    if(ytBtn) ytBtn.className = 'sim-plat-btn' + (plat==='yt' ? ' sim-plat-on' : '');
+    /* Rebuild immediately — no transition on mobile */
+    buildSim(platforms[plat].plans);
+    window.updateSim();
   };
 
   window.updateSim = function(){
@@ -4649,7 +4655,20 @@ function setPlat(p,btn){
     document.addEventListener('DOMContentLoaded', function(){
       buildSim(platforms.ig.plans);
       setTimeout(window.updateSim, 100);
+      /* Attach toggle via JS — more reliable than inline onclick on mobile */
+      var igBtn = document.getElementById('sim-btn-ig');
+      var ytBtn = document.getElementById('sim-btn-yt');
+      if(igBtn) igBtn.addEventListener('click', function(){ simSetPlat('ig'); });
+      if(ytBtn) ytBtn.addEventListener('click', function(){ simSetPlat('yt'); });
     });
+  } else {
+    /* Already loaded — attach now */
+    setTimeout(function(){
+      var igBtn = document.getElementById('sim-btn-ig');
+      var ytBtn = document.getElementById('sim-btn-yt');
+      if(igBtn) igBtn.addEventListener('click', function(){ simSetPlat('ig'); });
+      if(ytBtn) ytBtn.addEventListener('click', function(){ simSetPlat('yt'); });
+    }, 100);
   }
 })();
 
