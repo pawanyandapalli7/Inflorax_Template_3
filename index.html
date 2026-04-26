@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="format-detection" content="telephone=no"/>
+<meta name="autocomplete" content="off"/>
 <meta name="theme-color" content="#f4f7f0"/>
 <title>Inflorax® — Creator Growth Agency</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -90,6 +91,13 @@ nav{
   display:flex;flex-direction:column;
   background:var(--bg);
 }
+@media(max-width:768px){
+  #hero{background:#0a1a0b!important}
+  #hero::before{background:#0a1a0b!important}
+  #hero::after{background:none!important}
+  #hero-dark-mob{display:none!important}
+  .botanical-layer{mix-blend-mode:screen;opacity:0.25!important}
+}
 
 /* Interactive diagonal X lines — drawn on canvas */
 #x-canvas{
@@ -100,6 +108,7 @@ nav{
 
 /* hero main text */
 .hero-body{
+  position:relative;
   flex:1;display:flex;flex-direction:column;justify-content:center;
   padding:40px 28px 24px;
   position:relative;z-index:2;
@@ -407,6 +416,7 @@ nav{
   border-radius:10px;
   padding:3px;
   flex-shrink:0;
+  position:relative;z-index:10;
 }
 .sim-plat-btn{
   padding:9px 20px;
@@ -419,6 +429,7 @@ nav{
   transition:all .25s cubic-bezier(.16,1,.3,1);
   letter-spacing:-.01em;
   white-space:nowrap;
+  position:relative;z-index:10;
 }
 .sim-plat-btn:hover{color:rgba(255,255,255,.7)}
 .sim-plat-on{
@@ -1343,16 +1354,16 @@ footer::before{
   .ham{display:flex}
   .wrap{padding:0 16px}
   /* HERO */
-  #hero{min-height:auto;background:var(--bg)!important}
-  .hero-body{padding:36px 16px 20px;background:var(--bg)}
+  #hero{min-height:auto}
+  .hero-body{padding:36px 16px 20px;background:transparent!important}
   .hero-badge{display:none!important}
   .hero-h1{font-size:clamp(40px,11vw,64px)}
   .hero-tag{font-size:10px}
   .hero-h1{font-size:clamp(40px,11vw,64px)}
   .hero-tag{font-size:10px}
   /* HERO BOTTOM */
-  .hero-bottom{grid-template-columns:1fr;background:var(--bg)}
-  .hb-mid{padding:14px 16px;font-size:13px;color:var(--ink60);border-bottom:1px solid var(--line)}
+  .hero-bottom{grid-template-columns:1fr;background:transparent!important;display:none!important}
+  .hb-mid{padding:14px 16px;font-size:13px;color:rgba(255,255,255,.45);border-bottom:1px solid rgba(255,255,255,.08)}
   .hb-cta{border-left:none;border-top:1px solid var(--line);padding:16px;flex-direction:column;gap:10px}
   .hb-cta .btn-d{background:var(--green)!important;color:#fff!important;width:100%;justify-content:center;min-height:52px;font-size:14px}
   .hb-cta .btn-o{width:100%;justify-content:center;min-height:52px;font-size:14px;color:var(--ink);border-color:var(--ink)}
@@ -1959,6 +1970,12 @@ footer::before{
     radial-gradient(ellipse 42% 38% at 6% 88%, rgba(110,175,95,0.24) 0%, transparent 70%),
     radial-gradient(ellipse 40% 36% at 94% 90%, rgba(128,185,110,0.22) 0%, transparent 70%);
 }
+@media(max-width:768px){
+  #hero::before{
+    background:linear-gradient(170deg,#0d1f0e 0%,#0a1a0b 40%,#081208 100%)!important;
+    opacity:1!important;
+  }
+}
 
 /* Botanical layer — corner clusters */
 .botanical-layer{
@@ -2265,7 +2282,7 @@ footer::before{
 .hero-mobile-stats{display:none}
 .hero-mobile-cta{display:none}
 @media(max-width:768px){
-  #hero{height:auto!important;min-height:auto!important}
+  #hero{height:auto!important;min-height:100svh!important}
   .hero-body{flex:none;display:flex;flex-direction:column;justify-content:flex-start;padding:16px 20px 20px}
   .hero-badge{display:none!important}
   .hero-bottom{display:none!important}
@@ -2541,6 +2558,278 @@ footer::before{
   .hb-cta .btn-d,.hb-cta .btn-o{font-size:14px}
   .float-cta{font-size:14px;padding:14px}
 }
+
+@media(max-width:768px){
+}
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{
+  -webkit-box-shadow:0 0 0 1000px transparent inset!important;
+  background-color:transparent!important;
+}
+/* Prevent autofill dropdown covering toggle buttons */
+#simulator input[type="range"]{pointer-events:auto}
+
+/* Hide mobile-only hero elements on desktop */
+.hero-mob-sub{display:none}
+.hero-trust-row{display:none}
+.hero-tag-dot{display:none}
+
+/* ════ MOBILE HERO REDESIGN ════ */
+@media(max-width:768px){
+
+  /* Kill the cream watercolor overlay that covers dark bg */
+  #hero::before{display:none!important;content:none!important}
+
+  /* Full dark atmospheric hero on mobile */
+  #hero{
+    background:linear-gradient(170deg,#0d1f0e 0%,#0a1a0b 40%,#081208 100%)!important;
+    min-height:100svh!important;
+    display:flex;flex-direction:column;justify-content:flex-start;
+    padding-top:calc(var(--nav-h) + 8px);
+    overflow:hidden;position:relative;
+  }
+
+  /* Dark canvas dots on mobile */
+  #x-canvas{opacity:.25}
+  /* Hide ghost leaves that show as highlight on dark bg */
+  .bc-ghost{display:none}
+  /* Remove any bg from h-inner */
+  .h-inner{background:none!important}
+
+  /* Botanical leaves — more visible on dark bg */
+  .botanical-layer{opacity:.55!important}
+
+  /* Hero body full dark */
+  .hero-body{
+  position:relative;
+    padding:32px 20px 24px!important;
+    position:relative;z-index:2;
+  }
+
+  /* Tag — glowing pill */
+  .hero-tag{
+    display:inline-flex!important;
+    align-items:center;gap:8px;
+    background:rgba(45,122,58,.12);
+    border:1px solid rgba(45,122,58,.25);
+    border-radius:100px;
+    padding:6px 14px!important;
+    font-size:9px!important;
+    letter-spacing:.14em!important;
+    color:rgba(80,200,95,.8)!important;
+    margin-bottom:20px!important;
+  }
+  .hero-tag-dot{
+    width:5px;height:5px;border-radius:50%;
+    background:var(--green);flex-shrink:0;
+    box-shadow:0 0 6px rgba(45,122,58,.8);
+    animation:livePulse 2s ease-in-out infinite;
+  }
+
+  /* H1 — white on dark, massive */
+  .hero-h1{
+    color:#fff!important;
+    font-size:clamp(38px,11vw,52px)!important;
+    line-height:1.04!important;
+    margin-bottom:16px!important;
+    text-shadow:0 2px 40px rgba(0,0,0,.4);
+  }
+  .hero-h1 em{
+    color:var(--green)!important;
+    text-shadow:0 0 40px rgba(45,122,58,.3)!important;
+  }
+
+  /* Mobile sub */
+  .hero-mob-sub{
+    display:block;
+    font-size:15px;color:rgba(255,255,255,.45);
+    line-height:1.6;margin-bottom:24px;
+  }
+
+  /* Stats strip — dark glass */
+  .hero-mobile-stats{
+    display:flex!important;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:14px;
+    padding:0;overflow:hidden;
+    margin-bottom:16px;
+  }
+  .hms-item{
+    flex:1;padding:14px 8px;text-align:center;
+  }
+  .hms-div{width:1px;background:rgba(255,255,255,.07);align-self:stretch}
+  .hms-num{
+    display:block!important;
+    font-size:20px!important;font-weight:900!important;
+    color:#fff!important;letter-spacing:-.03em;
+    line-height:1;margin-bottom:4px;
+  }
+  .hms-label{
+    display:block;
+    font-family:var(--mono);font-size:8px!important;
+    letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(255,255,255,.3)!important;
+  }
+
+  /* Trust badges row */
+  .hero-trust-row{
+    display:flex!important;
+    gap:8px;flex-wrap:wrap;
+    margin-bottom:24px;
+  }
+  .hero-trust-item{
+    font-family:var(--mono);font-size:9px;letter-spacing:.06em;
+    color:rgba(255,255,255,.6);
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:100px;padding:6px 12px;
+  }
+
+  /* CTA buttons — full dark style */
+  .hero-cta-main{
+    background:var(--green)!important;
+    box-shadow:0 8px 32px rgba(45,122,58,.4),0 2px 8px rgba(0,0,0,.3)!important;
+    font-size:16px!important;
+    min-height:58px!important;
+    border-radius:16px!important;
+    letter-spacing:-.02em!important;
+  }
+  .hero-mobile-cta-sec{
+    color:rgba(255,255,255,.55)!important;
+    background:rgba(255,255,255,.05)!important;
+    border:1px solid rgba(255,255,255,.1)!important;
+    border-radius:16px!important;
+    min-height:50px!important;
+    font-size:14px!important;
+  }
+  .hero-mobile-cta-sec:hover{
+    background:rgba(255,255,255,.1)!important;
+    color:rgba(255,255,255,.8)!important;
+  }
+
+  /* Hide desktop-only bottom section */
+  .hero-bottom{display:none!important}
+
+  /* Gradient fade at bottom into next section */
+  #hero::after{
+    content:'';position:absolute;bottom:0;left:0;right:0;height:80px;
+    background:linear-gradient(to bottom,transparent,var(--bg));
+    z-index:3;pointer-events:none;
+  }
+}
+/* ════ END MOBILE HERO ════ */
+
+@media(max-width:768px){
+  /* Nav transparent on dark hero */
+  #nav{
+    background:rgba(8,18,8,.85)!important;
+    backdrop-filter:blur(20px)!important;
+    -webkit-backdrop-filter:blur(20px)!important;
+    border-bottom:1px solid rgba(255,255,255,.06)!important;
+  }
+  .logo{color:#fff!important}
+  .logo-heart{background:var(--green)!important}
+  .ham span{background:#fff!important}
+}
+</style>
+
+<style>
+/* Keyframes OUTSIDE media query (required for browser compatibility) */
+@keyframes heroOrbPulse{
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.7}
+  50%{transform:translate(-50%,-50%) scale(1.3);opacity:1}
+}
+@keyframes heroScrollBounce{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(5px)}
+}
+
+/* Hero dark overlay — hidden by default */
+#hero-dark-mob{display:none}
+#hero-stars-mob{display:none}
+
+@media(max-width:768px){
+  /* Dark overlay */
+  #hero-dark-mob{
+    display:block!important;position:absolute;inset:0;z-index:1;
+    background:linear-gradient(170deg,#0d1f0e 0%,#0a1a0b 40%,#081208 100%);
+    pointer-events:none;
+  }
+  /* Star canvas */
+  #hero-stars-mob{
+    display:block!important;position:absolute;inset:0;
+    width:100%;height:100%;pointer-events:none;z-index:2;
+  }
+  /* Stacking */
+  .hero-body{z-index:3!important;position:relative!important}
+  .hero-bottom{z-index:3!important;position:relative!important;display:none!important}
+  .hero-badge{z-index:4!important}
+  .botanical-layer{z-index:2!important;opacity:0.2!important;mix-blend-mode:screen!important}
+  /* Orb */
+  .hero-body::before{
+    content:'';position:absolute;width:300px;height:300px;border-radius:50%;
+    background:radial-gradient(circle,rgba(45,122,58,.2) 0%,rgba(45,122,58,.05) 50%,transparent 75%);
+    top:35%;left:50%;transform:translate(-50%,-50%);
+    animation:heroOrbPulse 4s ease-in-out infinite;
+    pointer-events:none;z-index:0;
+  }
+  /* H1 */
+  .hero-h1{text-shadow:0 0 60px rgba(255,255,255,.06)!important;position:relative;z-index:3}
+  .hero-h1 em{text-shadow:0 0 30px rgba(45,122,58,.4)!important}
+  /* Tag */
+  .hero-tag{
+    border:1px solid rgba(45,122,58,.3)!important;
+    background:rgba(45,122,58,.1)!important;
+    color:rgba(80,200,95,.8)!important;
+    position:relative;z-index:3;
+  }
+  /* Sub */
+  .hero-mob-sub{position:relative;z-index:3;color:rgba(255,255,255,.45)!important}
+  /* Stats glass */
+  .hero-mobile-stats{
+    background:rgba(255,255,255,.05)!important;
+    border:1px solid rgba(255,255,255,.09)!important;
+    border-radius:14px!important;backdrop-filter:blur(10px)!important;
+    position:relative;z-index:3;
+    box-shadow:0 8px 24px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.07)!important;
+  }
+  .hms-num{color:#fff!important;font-size:20px!important;font-weight:900!important}
+  .hms-label{color:rgba(255,255,255,.3)!important}
+  .hms-div{background:rgba(255,255,255,.07)!important}
+  /* Trust */
+  .hero-trust-row{display:flex!important;position:relative;z-index:3}
+  .hero-trust-item{background:rgba(45,122,58,.08)!important;border:1px solid rgba(45,122,58,.18)!important;color:rgba(80,200,95,.65)!important}
+  /* CTAs */
+  .hero-cta-main{
+    position:relative;z-index:3;
+    box-shadow:0 8px 28px rgba(45,122,58,.4),0 0 50px rgba(45,122,58,.1)!important;
+    font-size:16px!important;min-height:58px!important;border-radius:16px!important;
+  }
+  .hero-mobile-cta-sec{
+    position:relative;z-index:3;
+    background:rgba(255,255,255,.05)!important;
+    border:1px solid rgba(255,255,255,.1)!important;
+    color:rgba(255,255,255,.55)!important;
+    border-radius:16px!important;min-height:50px!important;
+  }
+  /* Scroll hint */
+  .hero-body::after{
+    content:'scroll';position:absolute;bottom:-32px;left:50%;
+    transform:translateX(-50%);
+    font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;
+    color:rgba(255,255,255,.18);
+    animation:heroScrollBounce 2s ease-in-out infinite;
+  }
+  /* Nav dark */
+  #nav{
+    background:rgba(8,18,8,.85)!important;
+    backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;
+    border-bottom:1px solid rgba(255,255,255,.06)!important;
+  }
+  .logo{color:#fff!important}
+  .logo-heart{background:var(--green)!important}
+  .ham span{background:#fff!important}
+}
 </style>
 </head>
 <body>
@@ -2609,8 +2898,10 @@ footer::before{
   <button class="drawer-cta" onclick="go('packages')">Start this plan →</button>
 </div>
 
-<!-- ══ HERO ══ -->
+<!-- ══ HERO MOBILE OVERRIDE ══ --><!-- ══ HERO ══ -->
 <section id="hero">
+  <div id="hero-dark-mob"></div>
+  <canvas id="hero-stars-mob"></canvas>
   <canvas id="x-canvas"></canvas>
 
   <!-- ══ WATERCOLOR BOTANICAL LAYER ══ -->
@@ -3009,23 +3300,51 @@ footer::before{
   </div>
 
   <div class="hero-body">
-    <div class="hero-tag rv">Instagram &amp; YouTube Growth Agency</div>
+    <!-- Agency tag -->
+    <div class="hero-tag rv">
+      <span class="hero-tag-dot"></span>
+      Instagram &amp; YouTube Growth Agency
+      <span class="hero-tag-dot"></span>
+    </div>
+
+    <!-- H1 -->
     <h1 class="hero-h1">
       <span class="h-row" style="display:block;overflow:hidden"><span class="h-inner rv" style="display:block">You've been posting…</span></span>
       <span class="h-row" style="display:block;overflow:hidden"><span class="h-inner rv" style="display:block;transition-delay:.07s">but no one</span></span>
       <span class="h-row" style="display:block;overflow:hidden"><span class="h-inner rv" style="display:block;transition-delay:.14s"><em>is seeing it.</em></span></span>
     </h1>
-    <!-- Mobile stats strip -->
+
+    <!-- Mobile sub -->
+    <p class="hero-mob-sub rv" style="transition-delay:.18s">Your content deserves an audience. We get it in front of one.</p>
+
+    <!-- Mobile stats strip — redesigned -->
     <div class="hero-mobile-stats">
-      <div class="hms-item"><span class="hms-num">8</span><span class="hms-label">Packages</span></div>
+      <div class="hms-item">
+        <span class="hms-num">8</span>
+        <span class="hms-label">Packages</span>
+      </div>
       <div class="hms-div"></div>
-      <div class="hms-item"><span class="hms-num">24h</span><span class="hms-label">Start time</span></div>
+      <div class="hms-item">
+        <span class="hms-num">24h</span>
+        <span class="hms-label">Start time</span>
+      </div>
       <div class="hms-div"></div>
-      <div class="hms-item"><span class="hms-num">IG+YT</span><span class="hms-label">Platforms</span></div>
+      <div class="hms-item">
+        <span class="hms-num">IG+YT</span>
+        <span class="hms-label">Platforms</span>
+      </div>
     </div>
-    <!-- Mobile CTA -->
+
+    <!-- Mobile trust badges -->
+    <div class="hero-trust-row">
+      <span class="hero-trust-item">🔒 No passwords</span>
+      <span class="hero-trust-item">✓ No bots</span>
+      <span class="hero-trust-item">⚡ Real growth</span>
+    </div>
+
+    <!-- Mobile CTAs -->
     <div class="hero-mobile-cta">
-      <button class="btn-d btn-blue btn-magnetic" onclick="go('packages')">Start My Growth →</button>
+      <button class="btn-d btn-blue btn-magnetic hero-cta-main" onclick="go('packages')">Start My Growth →</button>
       <button class="hero-mobile-cta-sec" onclick="go('process')">See How It Works</button>
     </div>
   </div>
@@ -3220,7 +3539,7 @@ footer::before{
 </section>
 
 <!-- ══ SIMULATOR ══ -->
-<section class="sec" id="simulator">
+<section class="sec" id="simulator" autocomplete="off">
   <canvas id="sim-canvas"></canvas>
   <div class="wrap">
     <div class="sec-header rv">
@@ -3252,7 +3571,7 @@ footer::before{
         <div class="sf-slider-wrap" style="flex:1;min-width:120px">
           <div class="sf-track"></div>
           <div class="sf-fill" id="ff1"></div>
-          <input type="range" min="100" max="50000" value="1000" step="100" id="fs" oninput="updateSim()" style="touch-action:pan-x"/>
+          <input type="range" min="100" max="50000" value="1000" step="100" id="fs" oninput="updateSim()" style="touch-action:pan-x" autocomplete="off" name="followers-slider"/>
         </div>
         <div class="sim-fol-val"><span id="fv">1,000</span><span class="sim-fol-unit">followers</span></div>
       </div>
@@ -4849,6 +5168,125 @@ document.querySelectorAll('.pkg-why-btn').forEach(function(b){
       el.style.transform = 'translate('+d.x+'px,'+d.y+'px)';
       el.style.transition = 'transform .8s cubic-bezier(.16,1,.3,1)';
     });
+  });
+})();
+
+
+/* ════ MOBILE HERO DARK BG (JS FORCE) ════ */
+(function(){
+  function applyHeroBg(){
+    var hero = document.getElementById('hero');
+    if(!hero) return;
+    if(window.innerWidth <= 768){
+      hero.style.setProperty('background','linear-gradient(170deg,#0d1f0e 0%,#0a1a0b 40%,#081208 100%)','important');
+      hero.style.setProperty('min-height','100svh','important');
+      // Also darken nav
+      var nav = document.getElementById('nav');
+      if(nav){
+        nav.style.setProperty('background','rgba(8,18,8,.88)','important');
+        nav.style.setProperty('border-bottom','1px solid rgba(255,255,255,.07)','important');
+      }
+      // White logo on dark
+      var logo = document.querySelector('.logo');
+      if(logo) logo.style.color = '#fff';
+      // White hamburger
+      document.querySelectorAll('.ham span').forEach(function(s){ s.style.background='#fff'; });
+    } else {
+      hero.style.removeProperty('background');
+      hero.style.removeProperty('min-height');
+      var nav = document.getElementById('nav');
+      if(nav){
+        nav.style.removeProperty('background');
+        nav.style.removeProperty('border-bottom');
+      }
+    }
+  }
+  // Run immediately and on resize
+  applyHeroBg();
+  document.addEventListener('DOMContentLoaded', applyHeroBg);
+  window.addEventListener('resize', applyHeroBg);
+})();
+
+
+/* ════ HERO MOBILE STARFIELD ════ */
+(function(){
+  if(window.innerWidth > 768) return;
+  var cv = document.getElementById('hero-stars-mob');
+  if(!cv) return;
+  var ctx = cv.getContext('2d');
+  var W, H, stars = [], t = 0, animId;
+
+  function resize(){
+    var hero = document.getElementById('hero');
+    W = cv.width  = hero ? hero.offsetWidth  : window.innerWidth;
+    H = cv.height = hero ? hero.offsetHeight : window.innerHeight;
+  }
+
+  function makeStars(){
+    stars = [];
+    var count = Math.floor(W * H / 4000);
+    for(var i = 0; i < count; i++){
+      stars.push({
+        x: Math.random()*W, y: Math.random()*H,
+        r: Math.random() < .7 ? .5 : Math.random() < .8 ? 1 : 1.6,
+        baseA: .1 + Math.random()*.5,
+        speed: .003 + Math.random()*.01,
+        offset: Math.random()*Math.PI*2,
+        green: Math.random() < .12,
+      });
+    }
+  }
+
+  function draw(){
+    if(window.innerWidth > 768){ cancelAnimationFrame(animId); return; }
+    ctx.clearRect(0,0,W,H);
+    t += .016;
+    stars.forEach(function(s){
+      var a = s.baseA * (.5 + .5*Math.sin(t*s.speed*60 + s.offset));
+      if(Math.sin(t*s.speed*20 + s.offset) > .92) a = Math.min(1, a*2);
+      ctx.globalAlpha = a;
+      if(s.r > 1.2){
+        /* Large star with cross */
+        var g = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*5);
+        g.addColorStop(0, s.green ? 'rgba(80,200,95,1)' : 'rgba(255,255,255,1)');
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.r*5,0,Math.PI*2);
+        ctx.fill();
+        ctx.globalAlpha = a*.4;
+        ctx.strokeStyle = s.green ? 'rgba(80,200,95,.6)' : 'rgba(255,255,255,.5)';
+        ctx.lineWidth = .6;
+        ctx.beginPath();
+        ctx.moveTo(s.x-s.r*8,s.y); ctx.lineTo(s.x+s.r*8,s.y);
+        ctx.moveTo(s.x,s.y-s.r*8); ctx.lineTo(s.x,s.y+s.r*8);
+        ctx.stroke();
+      } else {
+        var g2 = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*4);
+        g2.addColorStop(0, s.green ? 'rgba(80,200,95,1)' : 'rgba(255,255,255,.9)');
+        g2.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g2;
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.r*4,0,Math.PI*2);
+        ctx.fill();
+      }
+    });
+    ctx.globalAlpha = 1;
+    animId = requestAnimationFrame(draw);
+  }
+
+  function init(){
+    resize(); makeStars(); draw();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  window.addEventListener('resize', function(){
+    if(window.innerWidth > 768){ cancelAnimationFrame(animId); return; }
+    resize(); makeStars();
   });
 })();
 
